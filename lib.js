@@ -104,16 +104,39 @@ function newComponent() {
 	var cmp_type = $('#components > .selected').attr('id').replace('new_', '');
 	//var cmp_type = selected_new_cmp.replace('new_', '');
 	var cmp_id = cmp_type + '_' + Date.now()+''+parseInt(Math.random()*1000);
-	var cmp_css = "left: "+$('#mouse_x').text()+"px; top: "+$('#mouse_y').text()+"px; width: "+$('#mouse_x_drag').text()+"px; height: "+$('#mouse_y_drag').text()+"px; ";
-	var cmp_html = "<div class=component id="+cmp_id+" style='"+cmp_css+"'>"+cmp_type+"</div>";
+	
+	cmp_css = {
+		'left': $('#mouse_x').text(),
+		'top': $('#mouse_y').text(),
+		'width':$('#mouse_x_drag').text(),
+		'height': $('#mouse_y_drag').text(),
+		
+		'cursor': 'move'
+	};
+	cmp_html = '<div class=component id=_id_>_type_</div>';
+	
+	if (cmp_type == 'button') {
+		cmp_html = '<div class="component button" id=_id_>Button</div>';
+	}
+	if (cmp_type == 'textbox') {
+		cmp_html = '<input class="component textbox" id=_id_ type=text />';
+	}
+	
+	cmp_html = cmp_html.replace('_id_', cmp_id).replace('_type_', cmp_type);
+	//console.log(cmp_id);
+	//var cmp_css = "left: "+$('#mouse_x').text()+"px; top: "+$('#mouse_y').text()+"px; width: "+$('#mouse_x_drag').text()+"px; height: "+$('#mouse_y_drag').text()+"px; ";
+	//var cmp_html = "<div class=component id="+cmp_id+" style='"+cmp_css+"'>"+cmp_type+"</div>";
 	
 	$('#main_center > #new_tmp_item').css({'left': -10, 'top':-10, 'width':0, 'height':0});
 	
 	$('#main_center').append(cmp_html);
 	var cmp_el = $('#'+cmp_id);
 	cmp_el.draggable();
-	cmp_el.css({'cursor':'move'});
+	cmp_el.resizable();
+	//cmp_el.css({'cursor':'move'});
+	cmp_el.css(cmp_css);
 	
-	console.log(cmp_type, cmp_id, cmp_html);
-	console.log($('#mouse_x').text(), $('#mouse_y').text(), $('#mouse_x_drag').text(), $('#mouse_y_drag').text());
+	//console.log(cmp_type, cmp_id, cmp_html);
+	//console.log($('#mouse_x').text(), $('#mouse_y').text(), $('#mouse_x_drag').text(), $('#mouse_y_drag').text());
+	
 }

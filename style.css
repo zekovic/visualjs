@@ -18,12 +18,18 @@
 	width: 800px;
 	max-width: 55%;
 	overflow: hidden;
+	background-color: #dbdbd8;
 }
 
 #main_center .component {
 	position: absolute;
 	border: 1px solid #000;
 }
+
+#main_center .component.button {
+	background-color: #c5c4bc;
+}
+
 #main_center > #new_tmp_item {
 	width: 0px;
 	height: 0px;
