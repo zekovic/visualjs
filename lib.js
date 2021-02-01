@@ -6,11 +6,15 @@
 
 $(window).on('load', function (e) {
 	
+	var ME = this;
 	var selected_new_cmp = $('#components > .selected').attr('id');
 	var panel_mouse_down = false;
 	var panel_mouse_up = false;
-	var new_tmp_item = $('#main_center > #new_tmp_item');
-	var coord_start = $('#main_center').position();
+	
+	var area = $('#main_center');
+	
+	var new_tmp_item = $('#new_tmp_item');
+	var coord_start = area.position();
 	var x_start = parseInt(coord_start.left);
 	var y_start = parseInt(coord_start.top);
 	
@@ -44,7 +48,10 @@ $(window).on('load', function (e) {
 		/*if (e.target.id != 'main_center') {
 			return;
 		}*/
-		if (e.target.id != 'main_center' && e.target.id != 'new_tmp_item') {
+		/*if (e.target.id != 'main_center' && e.target.id != 'new_tmp_item') {
+			return;
+		}*/
+		if (!$(e.target).hasClass('container') && e.target.id != 'new_tmp_item') {
 			return;
 		}
 		
@@ -69,17 +76,21 @@ $(window).on('load', function (e) {
 			
 			var xpos = parseInt($('#mouse_x').text());
 			var ypos = parseInt($('#mouse_y').text());
-			//var width = e.offsetX - xpos;
-			//var height = e.offsetY - ypos;
 			
 			xpos = snapToGrid(xpos);
 			ypos = snapToGrid(ypos);
 			
-			var width = e.clientX - x_start - xpos;
-			var height = e.clientY - y_start - ypos;
+			/*var width = e.clientX - x_start - xpos;
+			var height = e.clientY - y_start - ypos;*/
+			var width = e.offsetX - xpos;
+			var height = e.offsetY - ypos;
 			
 			width = snapToGrid(width);
 			height = snapToGrid(height);
+			
+			var tmp;
+			if (width < 0) { width = Math.abs(width); xpos-= width; /*$('#mouse_x').text(xpos);*/}
+			if (height < 0) { height = Math.abs(height); ypos-= height; /*$('#mouse_y').text(ypos);*/}
 			
 			$('#mouse_x_drag').text(width);
 			$('#mouse_y_drag').text(height);
@@ -110,7 +121,7 @@ $(window).on('load', function (e) {
 	
 	$('#properties > table').bind('click', function(e) {
 		var clicked_el = e.target;
-		if (clicked_el.tagName.toLowerCase() != 'td') {
+		if (clicked_el.tagName.toLowerCase() != 'td' || $(clicked_el).parent().index() == 0) {
 			return;
 		}
 		var clicked_row = $(clicked_el).parent().children();
@@ -134,12 +145,12 @@ function newComponent() {
 	//var cmp_type = selected_new_cmp.replace('new_', '');
 	var cmp_id = cmp_type + '_' + Date.now()+''+parseInt(Math.random()*1000);
 	
-	var cmp_left = snapToGrid($('#mouse_x').text());
-	var cmp_top = snapToGrid($('#mouse_y').text());
-	var cmp_width = snapToGrid($('#mouse_x_drag').text());
-	var cmp_height = snapToGrid($('#mouse_y_drag').text());
+	var cmp_left = snapToGrid($('#main_center > #new_tmp_item').css('left'));
+	var cmp_top = snapToGrid($('#main_center > #new_tmp_item').css('top'));
+	var cmp_width = snapToGrid($('#main_center > #new_tmp_item').css('width'));
+	var cmp_height = snapToGrid($('#main_center > #new_tmp_item').css('height'));
 	
-	$('#main_center > #new_tmp_item').css({'left': -10, 'top':-10, 'width':0, 'height':0});
+	$('#main_center > #new_tmp_item').css({'left': -5000, 'top':-5000, 'width':0, 'height':0});
 	//$('#main_center > #new_tmp_item').resizable('destroy');
 	
 	if (cmp_width < 20 && cmp_height < 20) {
@@ -165,6 +176,13 @@ function newComponent() {
 	}
 	if (cmp_type == 'label') {
 		cmp_html = '<div class="component label" id=_id_>_type_</div>';
+	}
+	
+	if (cmp_type == 'panel') {
+		cmp_html = '<div class="component container panel" id=_id_>_type_</div>';
+	}
+	if (cmp_type == 'form') {
+		cmp_html = '<div class="component container form" id=_id_>_type_</div>';
 	}
 	
 	cmp_html = cmp_html.replace('_id_', cmp_id).replace('_type_', cmp_type);
@@ -201,7 +219,7 @@ function newComponent() {
 
 function snapToGrid(value) {
 	var resolution = 10;
-	return parseInt(value/resolution) * resolution;
+	return parseInt(parseInt(value)/resolution) * resolution;
 }
 
 function fillPropertiesTable() {
@@ -211,10 +229,9 @@ function fillPropertiesTable() {
 	var table_html = "<tr id=r1><td id=c1>Name</td><td id=c2>Value</td></tr>";
 	table_html+= "<tr><td id=c1>&nbsp</td><td id=c2></td></tr>";
 	
-	for (i in js_el) {
+	/*for (i in js_el) {
 		js_prop = js_el[i];
-		prop_type = typeof(js_prop);
-		if (prop_type == 'number' || prop_type == 'string' || prop_type == 'boolean'|| js_prop === null) {
+		if (prop_type == 'number' || prop_type == 'string' || prop_type == 'boolean' || js_prop === null) {
 			if (i == 'innerHTML' || i == 'outerHTML') {
 				continue;
 			}
@@ -229,8 +246,24 @@ function fillPropertiesTable() {
 	this.asc = true;
 	if (!this.asc){rows = rows.reverse()}
 	for (var i = 0; i < rows.length; i++){table.append(rows[i])}
-	
+	*/
+	for (i in cmp_properties) {
+		js_prop = js_el[cmp_properties[i]];
+		prop_type = typeof(js_prop);
+		table_html+= "<tr><td>" + cmp_properties[i] + "</td><td>" + js_prop + "</td></tr>";
+	}
+	$('#properties > table').html(table_html);
 }
+
+
+// TODO
+var cmp_properties = [
+	'id', 'class', 'text', 'left', 'top', 'width', 'height', 'color', 'background', 'font', 'font-size',
+	'position', 'display', 'align', 'margin', 'padding', 'cursor', 'overflow'
+];
+
+
+
 
 function comparer(index) {
 	return function(a, b) {

@@ -4,6 +4,56 @@
 	font-size: 12px;
 }
 
+/*body {
+	margin: 0px;
+	padding: 0px;
+}*/
+
+#root {
+	/*position: relative;*/
+	width:100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+#root > div {
+	position: absolute;
+	border: 0px solid #000;
+	padding: 0px;
+	margin: 0px;
+}
+#main_top {
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+}
+
+#main_left {
+	width: 90px;
+	bottom: 30px;
+	left: 0px;
+	top: 50px;
+}
+
+#main_right {
+	width: 300px;
+	top: 50px;
+	bottom: 30px;
+	right: 0px;
+}
+
+#main_down {
+	left: 0px;
+	right: 0px;
+	height: 30px;
+	bottom: 0px;
+}
+#main_down > span {
+	display: inline-block;
+	width: 30px;
+	text-align: right;
+}
 #main_wrap td {
 	/*min-height: 500px;*/
 	border: 1px solid #3333AA;
@@ -14,12 +64,24 @@
 	max-width: 25%;
 	
 }
-#main_center {
-	position: relative;
-	width: 800px;
-	max-width: 55%;
-	overflow: hidden;
+
+#main_center_wrap {
+	left: 90px;
+	right: 300px;
+	top: 50px;
+	bottom: 30px;
 	background-color: #dbdbd8;
+}
+
+#main_center {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	/*position: relative;
+	width: 800px;
+	max-width: 55%;*/
+	overflow: hidden;
+	/*background-color: #dbdbd8;*/
 }
 
 #main_center .component {
@@ -51,22 +113,6 @@
 	height: 0px;
 	top: -10px;
 	left: -10px;
-}
-
-
-#status_bar_center {
-	height: 35px;
-}
-
-#status_bar_center > span {
-	display: inline-block;
-	width: 30px;
-	text-align: right;
-}
-#main_right {
-	width: 300px;
-	max-width: 300px;
-	/*max-width: 20%;*/
 }
 
 #toolbar {
@@ -108,15 +154,15 @@
 
 
 #properties, #project_structure {
-	border: 1px solid #000;
-	margin: 2px;
-	height: 210px;
+	/*border: 1px solid #000;
+	margin: 2px;*/
+	height: 50%;
 }
 
 #properties {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	border: 1px solid #333333;
+	/*border: 1px solid #333333;*/
 }
 #properties table * {
 	font-size: 11px;
@@ -129,7 +175,6 @@
 }
 #properties td {
 	padding: 3px;
-	max-width: 145px;
 	border: 1px solid #333333;
 	border-left: 0px;
 	border-bottom: 0px;
@@ -154,6 +199,6 @@
 #c1 { width: 145px; max-width: 145px; min-width: 145px; }
 #c2 { width: 145px; max-width: 145px; min-width: 145px; }
 #r1 #c1 { width: 145px; max-width: 145px; min-width: 145px; }
-#r1 #c2 { width: 117px; max-width: 117px; min-width: 117px;}
+#r1 #c2 { width: 124px; max-width: 124px; min-width: 124px;}
 
 

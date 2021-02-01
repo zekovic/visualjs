@@ -11,142 +11,105 @@
 <script type="text/javascript" src="lib.js"></script>
 </head>
 <body>
+<div id=root>
 
-<div>
-<h3>VISUAL FORMS</h3>
-
-<div id=main_menu>
-	<div>File</div>
-	<div>Edit</div>
-	<div>View</div>
-	<div>Project</div>
-	<div>Format</div>
-	<div>Debug</div>
-	<div>Run</div>
-	<div>Query</div>
-	<div>Diagram</div>
-	<div>Tools</div>
-	<div>Add-Ins</div>
-	<div>Window</div>
-	<div>Help</div>
+<div id=main_top>
+	<div id=main_menu>
+		<div>File</div>
+		<div>Edit</div>
+		<div>View</div>
+		<div>Project</div>
+		<div>Format</div>
+		<div>Debug</div>
+		<div>Run</div>
+		<div>Query</div>
+		<div>Diagram</div>
+		<div>Tools</div>
+		<div>Add-Ins</div>
+		<div>Window</div>
+		<div>Help</div>
+	</div>
+	
+	<div id=toolbar class=icon-wrap>
+		<div>+PRJ</div>
+		<div>+FRM</div>
+		<div>MENU</div>
+		|
+		<div>OPEN</div>
+		<div>SAVE</div>
+		|
+		<div>CUT</div>
+		<div>COPY</div>
+		<div>PASTE</div>
+		<div>FIND</div>
+		|
+		<div>UNDO</div>
+		<div>RDO</div>
+		|
+		<div>RUN</div>
+		<div>PAUSE</div>
+		<div>STOP</div>
+		|
+	</div>
 </div>
 
-<div id=toolbar class=icon-wrap>
-	<div>+PRJ</div>
-	<div>+FRM</div>
-	<div>MENU</div>
-	|
-	<div>OPEN</div>
-	<div>SAVE</div>
-	|
-	<div>CUT</div>
-	<div>COPY</div>
-	<div>PASTE</div>
-	<div>FIND</div>
-	|
-	<div>UNDO</div>
-	<div>RDO</div>
-	|
-	<div>RUN</div>
-	<div>PAUSE</div>
-	<div>STOP</div>
-	|
+<div id=main_left>
+	<div id=components class=icon-wrap>
+		<div id=cmp_select class=selected>CRS</div>
+		<div id=new_image>IMG</div>
+		<div id=new_label>LBL</div>
+		<div id=new_textbox>TXT</div>
+		<div id=new_form>FRM</div>
+		<div id=new_button>BTN</div>
+		<div id=new_checkbox>CHK</div>
+		<div id=new_radio>RAD</div>
+		<div id=new_combo>CMB</div>
+		<div id=new_list>LST</div>
+		<div id=new_hscroll>HSC</div>
+		<div id=new_vscroll>VSC</div>
+		<div id=new_timer>TMR</div>
+		<div id=new_disk>DSK</div>
+		<div id=new_folder>FLD</div>
+		<div id=new_file>FIL</div>
+		<div id=new_shape>SHP</div>
+		<div id=new_line>LIN</div>
+		<div id=new_panel>PNL</div>
+		<div id=new_data>DAT</div>
+		<div id=new_ole>OLE</div>
+	</div>
 </div>
 
-<table id=main_wrap>
-	<tr>
-		<td id=main_left>
+<div id=main_center_wrap>
+	<div id=main_center class='component container project'>
+		<div id=new_tmp_item class=component></div>
 		
-			<div id=components class=icon-wrap>
-				<div id=cmp_select class=selected>CRS</div>
-				<div id=new_image>IMG</div>
-				<div id=new_label>LBL</div>
-				<div id=new_textbox>TXT</div>
-				<div id=new_frame>FRM</div>
-				<div id=new_button>BTN</div>
-				<div id=new_checkbox>CHK</div>
-				<div id=new_radio>RAD</div>
-				<div id=new_combo>CMB</div>
-				<div id=new_list>LST</div>
-				<div id=new_hscroll>HSC</div>
-				<div id=new_vscroll>VSC</div>
-				<div id=new_timer>TMR</div>
-				<div id=new_disk>DSK</div>
-				<div id=new_folder>FLD</div>
-				<div id=new_file>FIL</div>
-				<div id=new_shape>SHP</div>
-				<div id=new_line>LIN</div>
-				<div id=new_jpg>JPG</div>
-				<div id=new_data>DAT</div>
-				<div id=new_ole>OLE</div>
-			</div>
-		
-		</td>
-		<td id=main_center>
-			<div id=new_tmp_item class=component></div>
-		</td>
-		<td id=main_right>
+	</div>
+</div>
+
+<div id=main_right>
+	<div id=project_structure>
+		Project
+	</div>
+	
+	<div id=properties>
+		<table>
+			<tr id=r1> <td id=c1>Name</td><td id=c2>Value</td></tr>
 			
-			<div id=project_structure>
-				Project
-			</div>
-			
-			<div id=properties>
-				<table>
-					<tr id=r1> <td id=c1>Name</td><td id=c2>Value</td></tr>
-					
-					<tr>  <td id=c1>&nbsp</td>	<td id=c2></td>   </tr>
-					<tr>  <td>display</td>		<td>inline</td> </tr>
-					<tr>  <td>color</td>		<td>blue</td>  </tr>
-					<tr>  <td>background</td>	<td>yellow</td>  </tr>
-					<tr>  <td>position</td>		<td>relative</td>  </tr>
-					<tr>  <td>display</td>		<td>inline</td> </tr>
-					<tr>  <td>color</td>		<td>blue</td>  </tr>
-					<tr>  <td>background</td>	<td>yellow</td>  </tr>
-					<tr>  <td>position</td>		<td>relative</td>  </tr>
-					<tr>  <td>display</td>		<td>inline</td> </tr>
-					<tr>  <td>color</td>		<td>blue</td>  </tr>
-					<tr>  <td>background</td>	<td>yellow</td>  </tr>
-					<tr>  <td>position</td>		<td>relative</td>  </tr>
-					<tr>  <td>display</td>		<td>inline</td> </tr>
-					<tr>  <td>color</td>		<td>blue</td>  </tr>
-					<tr>  <td>background</td>	<td>yellow</td>  </tr>
-					<tr>  <td>position</td>		<td>relative</td>  </tr>
-					<tr>  <td>display</td>		<td>inline</td> </tr>
-					<tr>  <td>color</td>		<td>blue</td>  </tr>
-					<tr>  <td>background</td>	<td>yellow</td>  </tr>
-					<tr>  <td>position</td>		<td>relative</td>  </tr>
-					<tr>  <td>display</td>		<td>inline</td> </tr>
-					<tr>  <td>color</td>		<td>blue</td>  </tr>
-					<tr>  <td>background</td>	<td>yellow</td>  </tr>
-					<tr>  <td>position</td>		<td>relative</td>  </tr>
-					<tr>  <td>display</td>		<td>inline</td> </tr>
-					<tr>  <td>color</td>		<td>blue</td>  </tr>
-					<tr>  <td>background</td>	<td>yellow</td>  </tr>
-					<tr>  <td>position</td>		<td>relative</td>
-				</table>
-			</div>
-			
-		</td>
-	</tr>
-	<tr>
-		<td>
-		</td>
-		
-		<td id=status_bar_center>
-			X <span id=mouse_x> </span> 
-			<span></span> 
-			Y <span id=mouse_y></span> 
-			<span></span> 
-			W <span id=mouse_x_drag></span> 
-			<span></span> 
-			H <span id=mouse_y_drag></span>
-		</td>
-		
-		<td>
-		</td>
-	</tr>
-</table>
+		</table>
+	</div>
+</div>
+
+<div id=main_down>
+	X <span id=mouse_x> </span> 
+	<span></span> 
+	Y <span id=mouse_y></span> 
+	<span></span> 
+	W <span id=mouse_x_drag></span> 
+	<span></span> 
+	H <span id=mouse_y_drag></span>
+	<span></span> 
+	
+</div>
 
 </div>
 
