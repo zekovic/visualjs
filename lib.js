@@ -71,14 +71,23 @@ $(window).on('load', function (e) {
 			var ypos = parseInt($('#mouse_y').text());
 			//var width = e.offsetX - xpos;
 			//var height = e.offsetY - ypos;
+			
+			xpos = snapToGrid(xpos);
+			ypos = snapToGrid(ypos);
+			
 			var width = e.clientX - x_start - xpos;
 			var height = e.clientY - y_start - ypos;
+			
+			width = snapToGrid(width);
+			height = snapToGrid(height);
 			
 			$('#mouse_x_drag').text(width);
 			$('#mouse_y_drag').text(height);
 			
+			var cmp_type = $('#components > .selected').attr('id').replace('new_', '');
 			//console.log(xpos,ypos,width,height);
 			if (width > 0 && height > 0) {
+				new_tmp_item[0].className = 'component '+cmp_type;
 				new_tmp_item.css({'left': xpos, 'top':ypos, 'width':width, 'height':height});
 			}
 		}
@@ -97,6 +106,26 @@ $(window).on('load', function (e) {
 		}
 		newComponent();
 	});
+	
+	
+	$('#properties > table').bind('click', function(e) {
+		var clicked_el = e.target;
+		if (clicked_el.tagName.toLowerCase() != 'td') {
+			return;
+		}
+		var clicked_row = $(clicked_el).parent().children();
+		var prop = clicked_row[0].textContent;
+		var val = clicked_row[1].textContent;
+		$(clicked_row[1]).html("<input id=property_input type=text />");
+		$('#property_input').val(val).css({'width': '100px', 'border':'0px'});
+		$('#property_input').focus().select();
+		$('#property_input').bind('blur', function() {
+			var txt_val = $(this).val();
+			$('#property_input').remove();
+			$(clicked_row[1]).html(txt_val);
+			$('.clicked')[0][prop] = txt_val;
+		});
+	});
 });
 
 
@@ -105,11 +134,23 @@ function newComponent() {
 	//var cmp_type = selected_new_cmp.replace('new_', '');
 	var cmp_id = cmp_type + '_' + Date.now()+''+parseInt(Math.random()*1000);
 	
+	var cmp_left = snapToGrid($('#mouse_x').text());
+	var cmp_top = snapToGrid($('#mouse_y').text());
+	var cmp_width = snapToGrid($('#mouse_x_drag').text());
+	var cmp_height = snapToGrid($('#mouse_y_drag').text());
+	
+	$('#main_center > #new_tmp_item').css({'left': -10, 'top':-10, 'width':0, 'height':0});
+	//$('#main_center > #new_tmp_item').resizable('destroy');
+	
+	if (cmp_width < 20 && cmp_height < 20) {
+		return;
+	}
+	
 	cmp_css = {
-		'left': $('#mouse_x').text(),
-		'top': $('#mouse_y').text(),
-		'width':$('#mouse_x_drag').text(),
-		'height': $('#mouse_y_drag').text(),
+		'left': cmp_left,
+		'top': cmp_top,
+		'width': cmp_width,
+		'height': cmp_height,
 		
 		'cursor': 'move'
 	};
@@ -119,7 +160,11 @@ function newComponent() {
 		cmp_html = '<div class="component button" id=_id_>Button</div>';
 	}
 	if (cmp_type == 'textbox') {
-		cmp_html = '<input class="component textbox" id=_id_ type=text />';
+		//cmp_html = '<input class="component textbox" id=_id_ type=text />';
+		cmp_html = '<div class="component textbox" id=_id_></div>';
+	}
+	if (cmp_type == 'label') {
+		cmp_html = '<div class="component label" id=_id_>_type_</div>';
 	}
 	
 	cmp_html = cmp_html.replace('_id_', cmp_id).replace('_type_', cmp_type);
@@ -127,16 +172,71 @@ function newComponent() {
 	//var cmp_css = "left: "+$('#mouse_x').text()+"px; top: "+$('#mouse_y').text()+"px; width: "+$('#mouse_x_drag').text()+"px; height: "+$('#mouse_y_drag').text()+"px; ";
 	//var cmp_html = "<div class=component id="+cmp_id+" style='"+cmp_css+"'>"+cmp_type+"</div>";
 	
-	$('#main_center > #new_tmp_item').css({'left': -10, 'top':-10, 'width':0, 'height':0});
+	
 	
 	$('#main_center').append(cmp_html);
 	var cmp_el = $('#'+cmp_id);
-	cmp_el.draggable();
-	cmp_el.resizable();
+	cmp_el.draggable({snap: '#main_center', grid: [ 10, 10 ]});
+	cmp_el.resizable({snap: '#main_center', grid: [ 10, 10 ]});
 	//cmp_el.css({'cursor':'move'});
 	cmp_el.css(cmp_css);
+	
+	cmp_el.bind('click', function(){
+		if ($('.clicked').attr('id') == $(this).attr('id')) {
+			console.log('already selected...');
+			return;
+		}
+		$('.clicked').removeClass('clicked').resizable('destroy');
+		$(this).addClass('clicked');
+		$(this).resizable({snap: '#main_center', grid: [ 10, 10 ]});
+		fillPropertiesTable();
+	});
+	cmp_el.trigger('click');
+	//setTimeout( function(){ cmp_el.trigger('click');}, 1500);
 	
 	//console.log(cmp_type, cmp_id, cmp_html);
 	//console.log($('#mouse_x').text(), $('#mouse_y').text(), $('#mouse_x_drag').text(), $('#mouse_y_drag').text());
 	
 }
+
+function snapToGrid(value) {
+	var resolution = 10;
+	return parseInt(value/resolution) * resolution;
+}
+
+function fillPropertiesTable() {
+	var js_el = $('.clicked')[0];
+	var js_prop = null, prop_type = "";
+	var i;
+	var table_html = "<tr id=r1><td id=c1>Name</td><td id=c2>Value</td></tr>";
+	table_html+= "<tr><td id=c1>&nbsp</td><td id=c2></td></tr>";
+	
+	for (i in js_el) {
+		js_prop = js_el[i];
+		prop_type = typeof(js_prop);
+		if (prop_type == 'number' || prop_type == 'string' || prop_type == 'boolean'|| js_prop === null) {
+			if (i == 'innerHTML' || i == 'outerHTML') {
+				continue;
+			}
+			table_html+= "<tr><td>" + i + "</td><td>" + js_prop + "</td></tr>";
+		}
+	}
+	$('#properties > table').html(table_html);
+	
+	var table = $('#properties > table');
+	var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+	//this.asc = !this.asc
+	this.asc = true;
+	if (!this.asc){rows = rows.reverse()}
+	for (var i = 0; i < rows.length; i++){table.append(rows[i])}
+	
+}
+
+function comparer(index) {
+	return function(a, b) {
+		var valA = getCellName(a, index), valB = getCellName(b, index)
+		return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+	}
+}
+function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+function getCellName(row, index){ return $(row).children('td').text() }
