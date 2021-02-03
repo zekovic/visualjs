@@ -169,14 +169,40 @@
 <div id=form_export style="display: none;">
 	<div class=icon-wrap id=export_toolbar>
 		<div id=export_generate>Generate</div>
-		<div id=export_code>Code</div>
+		<div id=export_code>All Code</div>
+		<div id=export_code_main>Main Code</div>
 		<div id=export_preview>Preview</div>
 		<div id=export_exit>Exit</div>
 	</div>
 	
-	<div id=export_code_panel ></div>
-	<div id=export_preview_panel style="display: none;"></div>
+	<div class=export-tab id=export_code_panel ><textarea></textarea></div>
+	<div class=export-tab id=export_code_panel_main style="display: none;"><textarea></textarea></div>
+	<div class=export-tab id=export_preview_panel style="display: none;"></div>
 </div>
+
+
+<div id=template_project style="display: none;">
+<template__html>
+	<template__head>
+		<title>Your project</title>
+		
+		<template__script type="text/javascript" src="jquery-3.5.1.js"></template__script>
+		<template__script type="text/javascript" src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></template__script>
+		<template__link rel="stylesheet" type="text/css" href="jquery-ui-1.12.1.custom/jquery-ui.min.css"/>
+		
+		<template__link rel="stylesheet" type="text/css" href="project_style.css"/>
+		<template__script type="text/javascript" src="project_lib.js"></template__script>
+	</template__head>
+	<template__body>
+		<template__div id="main_center_wrap">
+			___main_code_here___
+		</template__div>
+	</template__body>
+</template__html>
+
+</div>
+
+<div id=loading_file style="display: none;"></div>
 
 
 
