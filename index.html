@@ -8,7 +8,9 @@
 <link rel="stylesheet" type="text/css" href="jquery-ui-1.12.1.custom/jquery-ui.min.css"/>
 
 <link rel="stylesheet" type="text/css" href="style.css"/>
+<link rel="stylesheet" type="text/css" href="project_style.css"/>
 <script type="text/javascript" src="lib.js"></script>
+<script type="text/javascript" src="components.js"></script>
 </head>
 <body>
 <div id=root>
@@ -31,51 +33,37 @@
 	</div>
 	
 	<div id=toolbar class=icon-wrap>
-		<div>+PRJ</div>
-		<div>+FRM</div>
-		<div>MENU</div>
-		|
 		<div>OPEN</div>
 		<div>SAVE</div>
 		|
-		<div>CUT</div>
-		<div>COPY</div>
-		<div>PASTE</div>
-		<div>FIND</div>
+		<div id=tool_delete>DELETE</div>
 		|
-		<div>UNDO</div>
-		<div>RDO</div>
+		<div>DOCK:</div>
+		<div id=tool_dock_left>Left</div>
+		<div id=tool_dock_right>Right</div>
+		<div id=tool_dock_top>Top</div>
+		<div id=tool_dock_bottom>Bottom</div>
 		|
-		<div>RUN</div>
-		<div>PAUSE</div>
-		<div>STOP</div>
-		|
+		<div id=tool_export>EXPORT</div>
 	</div>
 </div>
 
 <div id=main_left>
 	<div id=components class=icon-wrap>
 		<div id=cmp_select class=selected>CRS</div>
-		<div id=new_image>IMG</div>
-		<div id=new_label>LBL</div>
-		<div id=new_textbox>TXT</div>
-		<div id=new_form>FRM</div>
-		<div id=new_button>BTN</div>
-		<div id=new_checkbox>CHK</div>
-		<div id=new_radio>RAD</div>
-		<div id=new_combo>CMB</div>
-		<div id=new_list>LST</div>
-		<div id=new_hscroll>HSC</div>
-		<div id=new_vscroll>VSC</div>
-		<div id=new_timer>TMR</div>
-		<div id=new_disk>DSK</div>
-		<div id=new_folder>FLD</div>
-		<div id=new_file>FIL</div>
-		<div id=new_shape>SHP</div>
-		<div id=new_line>LIN</div>
-		<div id=new_panel>PNL</div>
-		<div id=new_data>DAT</div>
-		<div id=new_ole>OLE</div>
+		
+		<div id=new_image		cXlass='ui-icon ui-icon- '>IMG</div>
+		<div id=new_label		cXlass='ui-icon ui-icon- '>LBL</div>
+		<div id=new_textbox		cXlass='ui-icon ui-icon- '>TXT</div>
+		<div id=new_textarea	cXlass='ui-icon ui-icon- '>TXA</div>
+		<div id=new_form		cXlass='ui-icon ui-icon- '>FRM</div>
+		<div id=new_button		cXlass='ui-icon ui-icon- '>BTN</div>
+		<div id=new_checkbox	cXlass='ui-icon ui-icon-check '>CHK</div>
+		<div id=new_radio		cXlass='ui-icon ui-icon-radio-on '>RAD</div>
+		<div id=new_combo		cXlass='ui-icon ui-icon-battery-0 '>CMB</div>
+		<div id=new_list		cXlass='ui-icon ui-icon- '>LST</div>
+		<div id=new_panel		cXlass='ui-icon ui-icon- '>PNL</div>
+		<div id=new_table		cXlass='ui-icon ui-icon- '>TBL</div>
 	</div>
 </div>
 
@@ -119,13 +107,77 @@
 
 <div id=templates style="display: none;">
 	
-	<div class=button>Button</div>
-	<div class=textbox></div>
-	<div class=label>Label</div>
-	<div class="container panel"></div>
-	<div class="container form"></div>
+	<div class='design real button'>
+		<span>Button</span>
+	</div>
+	
+	<div class='design textbox'>Textbox</div>
+	<input class='real textbox' />
+	
+	<div class='design textarea'>Textarea</div>
+	<textarea class='real textarea' >Textarea</textarea>
+	
+	<div class='design real label'>Label</div>
+	
+	<div class="design real container panel"></div>
+	
+	<div class="design real container form">
+		<div class=titlebar>Form</div>
+	</div>
+	
+	<div class='design real image'>IMG</div>
+	
+	<div class='design real checkbox'>
+		<input type=checkbox id=check_id />
+		<label for=check_id>Checkbox</label>
+	</div>
+	
+	<div class='design real radio'>
+		<input type=radio id=radio_id />
+		<label for=radio_id>Radio</label>
+	</div>
+	
+	<div class='design combo'>Combo box</div>
+	<select class='real combo'>
+		<option value='option1'>Option 1</option>
+		<option value='option2'>Option 2</option>
+		<option value='option3'>Option 3</option>
+	</select>
+	
+	<div class='design real list'>List</div>
+	
+	<div class='design real table'>
+		<table>
+			<tr id=r1> <td id=c1>Column1</td> <td id=c2>Column2</td> <td id=c3>Column3</td> </tr>
+			<tr> <td id=c1>&nbsp</td>    <td id=c2></td>    <td id=c3></td> </tr>
+			<tr> <td></td>    <td></td>    <td></td> </tr>
+			<tr> <td></td>    <td></td>    <td></td> </tr>
+			<tr> <td></td>    <td></td>    <td></td> </tr>
+			<tr> <td></td>    <td></td>    <td></td> </tr>
+			<tr> <td></td>    <td></td>    <td></td> </tr>
+			<tr> <td></td>    <td></td>    <td></td> </tr>
+		</table>
+	</div>
+	
+	<div class='design real shape'>SHP</div>
+	<div class='design real line'>LIN</div>
+	
 	
 </div>
+
+<div id=form_export style="display: none;">
+	<div class=icon-wrap id=export_toolbar>
+		<div id=export_generate>Generate</div>
+		<div id=export_code>Code</div>
+		<div id=export_preview>Preview</div>
+		<div id=export_exit>Exit</div>
+	</div>
+	
+	<div id=export_code_panel ></div>
+	<div id=export_preview_panel style="display: none;"></div>
+</div>
+
+
 
 </body>
 </html>
