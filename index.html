@@ -33,8 +33,8 @@
 	</div>
 	
 	<div id=toolbar class=icon-wrap>
-		<div>OPEN</div>
-		<div>SAVE</div>
+		<div id=tool_open>OPEN</div>
+		<div id=tool_save>SAVE</div>
 		|
 		<div id=tool_delete>DELETE</div>
 		|
@@ -76,6 +76,7 @@
 
 <div id=main_right>
 	<div id=project_structure>
+		<input id=file_opener type="file" id="file" style="display: none;">
 		Project
 		<span id=test>elements</span>
 		<div id=element_list>

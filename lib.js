@@ -224,7 +224,77 @@ $(window).on('load', function (e) {
 	$('#export_exit').bind('click', function(){
 		$('#form_export').hide();
 	});
+	
+	
+	
+	// drop file to import it
+	$('#main_center_wrap').bind('drop', function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		
+		var dataTransfer = e.originalEvent.dataTransfer;
+		//var fd = new FormData();
+		
+		if (dataTransfer.files && dataTransfer.files.length){
+			
+			var reader = new FileReader();
+			
+			$.each(dataTransfer.files, function(i, file) {
+				
+				reader.onload = function(e) {
+					fileData = e.target.result;
+					fileName = file.name;
+					/*localStorage.project_data = e.target.result;
+					localStorage.project_name = file.name;
+					$('#main_center').load(localStorage.project_data);*/
+					//$('#main_center').html(e.target.result);
+					$('#main_center').load(e.target.result);
+				};
+				reader.readAsDataURL(file);
+				//console.log(reader);
+			});
+			//fd.append("url","drop")
+			//upload(fd)
+		}
+	});
+	$('#main_center_wrap').bind('dragenter', function(e) {
+		//e.originalEvent.dataTransfer.dropEffect = 'copy'
+		e.preventDefault();
+		e.stopPropagation();
+		return false
+	});
+	$('#main_center_wrap').bind('dragover', function(e) {
+		e.originalEvent.dataTransfer.dropEffect = 'copy'
+		e.preventDefault();
+		e.stopPropagation();
+		//console.log(JSON.stringify (e.originalEvent.dataTransfer));
+		return false
+	});
+	
+	
+	$('#tool_open').bind('click', function() {
+		//$('#file_opener').trigger('click');
+		$('#main_center').html(localStorage.project_data);
+	});
+	$('#tool_save').bind('click', function() {
+		//$('#file_opener').trigger('click');
+		localStorage.project_data = $('#main_center').html();
+	});
+	$('#file_opener').bind('change', function(e){
+		console.log(this);
+		console.log($(this).val());
+	});
+	
 });
+
+
+function initProject() {
+	
+}
+
+function loadFromFile() {
+	
+}
 
 function newComponent() {
 	var cmp_type = $('#components > .selected').attr('id').replace('new_', '');
@@ -355,6 +425,13 @@ function deleteElement() {
 	$('.clicked').remove();
 	updateElementList();
 }
+
+
+
+
+
+
+
 
 
 // TODO
