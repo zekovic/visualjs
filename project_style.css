@@ -4,6 +4,10 @@
 	font-size: 12px;
 }
 
+.hidden {
+	display: none;;
+}
+
 /*body {
 	margin: 0px;
 	padding: 0px;
@@ -48,7 +52,9 @@
 	background-color: transparent;
 	border: none;
 }
-
+#main_center .component.container {
+	/*overflow: auto;*/
+}
 #main_center .component.form {
 	z-index: 1000;
 	background: #c3c5bc;
@@ -60,8 +66,17 @@
 	top: 0px;
 	height: 20px;
 	background: #b2b490;
+	cursor: default;
 }
-
+#main_center .component.form .form-close {
+	position: absolute;
+	right: 5;
+	top: 8px;
+	cursor: default;
+}
+#main_center .component.form .form-close :hover {
+	background-color: #161612 !important;
+}
 #main_center .component.table {
 	overflow-x: hidden;
 	overflow-y: scroll;

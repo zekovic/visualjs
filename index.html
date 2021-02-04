@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="style.css"/>
 <link rel="stylesheet" type="text/css" href="project_style.css"/>
 <script type="text/javascript" src="lib.js"></script>
+<script type="text/javascript" src="project_lib.js"></script>
 <script type="text/javascript" src="components.js"></script>
 </head>
 <body>
@@ -45,6 +46,9 @@
 		<div id=tool_dock_bottom>Bottom</div>
 		|
 		<div id=tool_export>EXPORT</div>
+		|
+		Snap to grid
+		<div><input id=tool_resolution type=text value=10 style="width:50px" /></div>
 	</div>
 </div>
 
@@ -106,7 +110,7 @@
 
 </div>
 
-<div id=templates style="display: none;">
+<div id=templates class=hidden>
 	
 	<div class='design real button'>
 		<span>Button</span>
@@ -123,6 +127,7 @@
 	<div class="design real container panel"></div>
 	
 	<div class="design real container form">
+		<div class='form-btn form-close ui-icon ui-icon-closethick'></div>
 		<div class=titlebar>Form</div>
 	</div>
 	
@@ -166,7 +171,7 @@
 	
 </div>
 
-<div id=form_export style="display: none;">
+<div id=form_export class=hidden>
 	<div class=icon-wrap id=export_toolbar>
 		<div id=export_generate>Generate</div>
 		<div id=export_code>All Code</div>
@@ -176,12 +181,12 @@
 	</div>
 	
 	<div class=export-tab id=export_code_panel ><textarea></textarea></div>
-	<div class=export-tab id=export_code_panel_main style="display: none;"><textarea></textarea></div>
-	<div class=export-tab id=export_preview_panel style="display: none;"></div>
+	<div class='export-tab hidden' id=export_code_panel_main><textarea></textarea></div>
+	<div class='export-tab hidden' id=export_preview_panel></div>
 </div>
 
 
-<div id=template_project style="display: none;">
+<div id=template_project class=hidden>
 <template__html>
 	<template__head>
 		<title>Your project</title>

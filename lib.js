@@ -1,11 +1,14 @@
 
 
 var area, new_tmp_item, selected_new_cmp;
+var snap_resolution;
 
 $(window).on('load', function (e) {
 	
 	var ME = this;
 	selected_new_cmp = $('#components > .selected').attr('id');
+	
+	snap_resolution = parseInt($('#tool_resolution').val());
 	var panel_mouse_down = false;
 	var panel_mouse_up = false;
 	
@@ -22,11 +25,11 @@ $(window).on('load', function (e) {
 		me.addClass('selected');
 		if (tool == 'cmp_select') {
 			$('#root #main_center').css('cursor', 'default');
-			$('#root #main_center .container').css('cursor', 'default').draggable({snap: '#root #main_center', grid: [ 10, 10 ]}); /////
+			$('#root #main_center .container').css('cursor', 'default').draggable({/*snap: '#root #main_center',*/ grid: [ snap_resolution, snap_resolution ]}); /////
 		} else {
 			$('#root #main_center').css('cursor', 'crosshair');
-			$('#root #main_center .container').css('cursor', 'crosshair').draggable('destroy'); /////
-			
+			$('#root #main_center .container').css('cursor', 'crosshair');
+			$('#root #main_center .panel.container.ui-draggable').draggable('destroy'); ///// form has titlebar
 		}
 		
 		
@@ -43,6 +46,9 @@ $(window).on('load', function (e) {
 			if (e.which == 13 && $(e.target).attr('id') == 'property_input') {
 				$('#property_input').trigger('blur');
 			}
+			if (e.which == 13 && $(e.target).attr('id') == 'tool_resolution') {
+				$('#tool_resolution').trigger('blur');
+			}
 			
 			return;
 		}
@@ -53,12 +59,35 @@ $(window).on('load', function (e) {
 		}
 	});
 	
+	$('#tool_resolution').bind('blur', function(){
+		var res = $('#tool_resolution');
+		if (!res.length) {
+			snap_resolution = 1;
+			return 1;
+		}
+		var res_val = parseInt(res.val());
+		if (res_val > 30) {
+			res_val = 30;
+		}
+		if (res_val < 1) {
+			res_val = 1;
+		}
+		snap_resolution = res_val;
+		initProject();
+		$('#root #main_center .component').each(function(){
+			initComponent($(this));
+		});
+		res.val(res_val);
+	});
+	
 	
 	$('#properties > table').bind('click', function(e) {
 		var clicked_el = e.target;
 		if (clicked_el.tagName.toLowerCase() != 'td' || $(clicked_el).parent().index() == 0) {
 			return;
 		}
+		var cmp = $('.clicked');
+		var cmp_type = cmp.attr('cmp_type');
 		var clicked_row = $(clicked_el).parent().children();
 		var prop = clicked_row[0].textContent;
 		var val = clicked_row[1].textContent;
@@ -68,8 +97,12 @@ $(window).on('load', function (e) {
 		$('#property_input').bind('blur', function() {
 			var txt_val = $(this).val();
 			$('#property_input').remove();
-			$(clicked_row[1]).html(txt_val);
-			$('.clicked')[0][prop] = txt_val;
+			if (setProperty(cmp, prop, txt_val)) {
+				$(clicked_row[1]).html(txt_val);
+			} else {
+				$(clicked_row[1]).html(val);
+			}
+			//cmp[0][prop] = txt_val;
 		});
 	});
 	
@@ -101,6 +134,9 @@ $(window).on('load', function (e) {
 		copied.find('.component').each(function(){
 			var this_el = $(this);
 			this_el.removeClass('clicked ui-draggable-handle ui-draggable ui-resizable');
+			if (this_el.css('cursor') == 'crosshair'){
+				this_el.css({cursor:'default'});
+			}
 			//this_el.find('.ui-resizable-handle').remove();
 			var cmp_type = $(this).attr('cmp_type');
 			var cmp_both_same = $('#templates .real.'+cmp_type).hasClass('design');
@@ -123,7 +159,8 @@ $(window).on('load', function (e) {
 		});
 		copied.find('.ui-resizable-handle').remove();
 		copied.find('.removing').remove();
-		copied.find('.component.form').draggable({'handle':'.titlebar'});
+		copied.find('.component.form').draggable({'handle':'.titlebar'}); // for code
+		copied.find('.component').removeClass('design real')/*.removeAttr('cmp_type')*/;
 		var html_template = $('#template_project').html().replaceAll('template__', '');
 		$('#export_code_panel > textarea').text(html_template.replace('___main_code_here___', copied.html()));
 		$('#export_code_panel_main > textarea').text(copied.html());
@@ -132,7 +169,7 @@ $(window).on('load', function (e) {
 		//copied.draggable('destroy');
 		//$('#export_preview_panel .component').resizable('destroy');
 		
-		
+		initForm($('#export_preview_panel .component.form')); // for preview
 	});
 	$('#export_code').bind('click', function(){
 		//$('#export_preview_panel').hide();
@@ -262,8 +299,8 @@ function initProject() {
 			width = snapToGrid(width);
 			height = snapToGrid(height);
 			
-			/*if (width < 0) { width = Math.abs(width); xpos-= width-10; }
-			if (height < 0) { height = Math.abs(height); ypos-= height-10; }*/
+			/*if (width < 0) { width = Math.abs(width); xpos-= width-snap_resolution; }
+			if (height < 0) { height = Math.abs(height); ypos-= height-snap_resolution; }*/
 			if (width <= 0) { width = -width; xpos-= width-(distance*2); }
 			if (height <= 0) { height = -height; ypos-= height-(distance*2); }
 			
@@ -348,13 +385,13 @@ function importProject() {
 function initComponent(cmp_el) {
 	
 	if (!cmp_el.hasClass('container')) {
-		cmp_el.draggable({snap: '#root #main_center', grid: [ 10, 10 ]});
+		cmp_el.draggable({/*snap: '#root #main_center',*/ grid: [ snap_resolution, snap_resolution ]});
 	} else {
 		//cmp_el.append('<div id=xx class="hndl ui-icon ui-icon-arrow-4"></div>');
-		//cmp_el.draggable({snap: '#root #main_center', grid: [ 10, 10 ], handle:'.hndl'});
+		//cmp_el.draggable({snap: '#root #main_center', grid: [ snap_resolution, snap_resolution ], handle:'.hndl'});
 		cmp_el.css('cursor', 'crosshair');
 	}
-	cmp_el.resizable({snap: '#root #main_center', handles: 'n, e, s, w, ne, se, nw, sw', grid: [ 10, 10 ]});
+	cmp_el.resizable({/*snap: '#root #main_center',*/ handles: 'n, e, s, w, ne, se, nw, sw', grid: [ snap_resolution, snap_resolution ]});
 	
 	$(cmp_el).unbind('click').bind('click', function(e){
 		//console.log(e);
@@ -370,11 +407,14 @@ function initComponent(cmp_el) {
 		}
 		$('.clicked').removeClass('clicked').resizable('destroy');
 		$(tgt).addClass('clicked');
-		$(tgt).resizable({snap: '#root #main_center', handles: 'n, e, s, w, ne, se, nw, sw', grid: [ 10, 10 ]});
+		$(tgt).resizable({/*snap: '#root #main_center',*/ handles: 'n, e, s, w, ne, se, nw, sw', grid: [ snap_resolution, snap_resolution ]});
 		fillPropertiesTable();
 		$('.project_element').removeClass('selected');
 		$('[el_id='+ tgt_id +']').addClass('selected');
 	});
+	if (cmp_el.hasClass('form')) {
+		initForm(cmp_el);
+	}
 }
 
 function newComponent() {
@@ -416,7 +456,8 @@ function newComponent() {
 
 function snapToGrid(value) {
 	//return value;
-	var resolution = 10;
+	var resolution = snap_resolution;
+	console.log(snap_resolution);
 	return parseInt(parseInt(value)/resolution) * resolution;
 }
 
@@ -427,6 +468,13 @@ function fillPropertiesTable() {
 	var table_html = "<tr id=r1><td id=c1>Name</td><td id=c2>Value</td></tr>";
 	table_html+= "<tr><td id=c1>&nbsp</td><td id=c2></td></tr>";
 	
+	prop_arr = getProperties(js_el);
+	for (i in prop_arr) {
+		table_html+= "<tr><td>" + i + "</td><td>" + prop_arr[i] + "</td></tr>";
+	}
+	
+	/*
+	// All js object properties:
 	for (i in js_el) {
 		js_prop = js_el[i];
 		prop_type = typeof(js_prop);
@@ -438,6 +486,7 @@ function fillPropertiesTable() {
 		}
 	}
 	$('#properties > table').html(table_html);
+	*/
 	
 	/*
 	// SORT:
@@ -471,6 +520,7 @@ function updateElementList() {
 		$('.project_element').removeClass('selected');
 		$(this).addClass('selected');
 		var element_id = $(this).attr('el_id');
+		$('#'+element_id).show();
 		$('#'+element_id).trigger('click');
 	});
 }
@@ -487,12 +537,6 @@ function deleteElement() {
 
 
 
-
-// TODO
-var cmp_properties = [
-	'id', 'class', 'text', 'left', 'top', 'width', 'height', 'color', 'background', 'font', 'font-size',
-	'position', 'display', 'align', 'margin', 'padding', 'cursor', 'overflow'
-];
 
 function comparer(index) {
 	return function(a, b) {
