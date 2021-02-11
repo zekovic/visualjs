@@ -49,11 +49,21 @@
 	background-color: #dbdbd8;
 }
 
+#root > #main_center_wrap {
+	background:
+		linear-gradient(90deg, #bbb 9px, transparent 0%),
+		linear-gradient(#bbb 9px, transparent 0%),
+		#000;
+	background-size: 10px 10px;
+}
+
 #main_center {
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	
+	
 }
 
 #main_center .component#new_tmp_item {

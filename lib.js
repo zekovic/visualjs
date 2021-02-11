@@ -77,6 +77,11 @@ $(window).on('load', function (e) {
 		$('#root #main_center .component').each(function(){
 			initComponent($(this));
 		});
+		
+		var panel = $('#root > #main_center_wrap')[0];
+		panel.style.background = "linear-gradient(90deg, #bbb "+(res_val-1)+"px, transparent 0%), linear-gradient(#bbb "+(res_val-1)+"px, transparent 0%), #000";
+		panel.style.backgroundSize = res_val+'px '+res_val+'px';
+		
 		res.val(res_val);
 	});
 	
@@ -457,7 +462,7 @@ function newComponent() {
 function snapToGrid(value) {
 	//return value;
 	var resolution = snap_resolution;
-	console.log(snap_resolution);
+	//console.log(snap_resolution);
 	return parseInt(parseInt(value)/resolution) * resolution;
 }
 
