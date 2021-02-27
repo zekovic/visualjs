@@ -41,6 +41,26 @@
 	
 }
 
+#main_left > #components > div {
+	margin: 3px;
+	padding: 7px 15px;
+}
+#main_left > #components > .selected, #main_left > #components > div:HOVER {
+	background-color: #56bdf5;
+	
+}
+
+#main_left #components #new_label {}
+#main_left #components #new_textbox {}
+#main_left #components #new_textarea {}
+#main_left #components #new_form {}
+#main_left #components #new_button {}
+#main_left #components #new_checkbox {}
+#main_left #components #new_radio {}
+#main_left #components #new_combo {}
+#main_left #components #new_panel {}
+#main_left #components #new_table {}
+
 #main_center_wrap {
 	left: 90px;
 	right: 300px;

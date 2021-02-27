@@ -67,21 +67,19 @@ $cache_arg = time();
 </div>
 
 <div id=main_left>
-	<div id=components class=icon-wrap>
-		<div id=cmp_select class=selected>CRS</div>
+	<div id=components class=iXcon-wrap>
+		<div id=cmp_select class=selected title="Select element"><img src="components/cursor.png"/></div>
 		
-		<div id=new_image		cXlass='ui-icon ui-icon- '>IMG</div>
-		<div id=new_label		cXlass='ui-icon ui-icon- '>LBL</div>
-		<div id=new_textbox		cXlass='ui-icon ui-icon- '>TXT</div>
-		<div id=new_textarea	cXlass='ui-icon ui-icon- '>TXA</div>
-		<div id=new_form		cXlass='ui-icon ui-icon- '>FRM</div>
-		<div id=new_button		cXlass='ui-icon ui-icon- '>BTN</div>
-		<div id=new_checkbox	cXlass='ui-icon ui-icon-check '>CHK</div>
-		<div id=new_radio		cXlass='ui-icon ui-icon-radio-on '>RAD</div>
-		<div id=new_combo		cXlass='ui-icon ui-icon-battery-0 '>CMB</div>
-		<div id=new_list		cXlass='ui-icon ui-icon- '>LST</div>
-		<div id=new_panel		cXlass='ui-icon ui-icon- '>PNL</div>
-		<div id=new_table		cXlass='ui-icon ui-icon- '>TBL</div>
+		<div id=new_label title="Label"><img src="components/label.png"/></div>
+		<div id=new_textbox title="Textbox"><img src="components/textbox.png"/></div>
+		<div id=new_textarea title="Textarea"><img src="components/textarea.png"/></div>
+		<div id=new_form title="Form"><img src="components/form.png"/></div>
+		<div id=new_button title="Button"><img src="components/button.png"/></div>
+		<div id=new_checkbox title="Checkbox"><img src="components/checkbox.png"/></div>
+		<div id=new_radio title="Radio button"><img src="components/radio.png"/></div>
+		<div id=new_combo title="Dropdown box"><img src="components/combo.png"/></div>
+		<div id=new_panel title="Panel"><img src="components/panel.png"/></div>
+		<div id=new_table title="Table"><img src="components/table.png"/></div>
 	</div>
 </div>
 
