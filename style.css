@@ -91,7 +91,7 @@
 	margin: 3px;
 	padding: 2px;
 }
-#toolbar > div, #export_toolbar > div {
+#toolbar > div, #export_toolbar > div, #code_toolbar > div {
 	display: inline;
 }
 #main_menu {
@@ -207,4 +207,23 @@
 	width: 99%;
 	height: 88%;
 	background: #f1f3dc;
+}
+
+
+
+#code_editor {
+	position: absolute;
+	z-index: 10000;
+	left: 80px;
+	top: 80px;
+	right: 300px;
+	bottom: 300px;
+	background: #fff;
+	border: 1px solid #555;
+}
+#code_panel textarea {
+	width: 100%;
+	height: 100%;
+	font-family: monospace;
+	resize: none;
 }

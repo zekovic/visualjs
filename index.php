@@ -1,17 +1,21 @@
 <html>
-
 <head>
+
+<?php 
+$cache_arg = time();
+?>
+
 <title>Visual Forms</title>
 
 <script type="text/javascript" src="jquery-3.5.1.js"></script>
 <script type="text/javascript" src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <link rel="stylesheet" type="text/css" href="jquery-ui-1.12.1.custom/jquery-ui.min.css"/>
 
-<link rel="stylesheet" type="text/css" href="style.css"/>
-<link rel="stylesheet" type="text/css" href="project_style.css"/>
-<script type="text/javascript" src="lib.js"></script>
-<script type="text/javascript" src="project_lib.js"></script>
-<script type="text/javascript" src="components.js"></script>
+<link id=all_style rel="stylesheet" type="text/css" href="style.css<?php echo "?a=$cache_arg" ?>"/>
+<link id=project_style rel="stylesheet" type="text/css" href="project_style.css<?php echo "?a=$cache_arg" ?>"/>
+<script type="text/javascript" src="lib.js<?php echo "?a=$cache_arg" ?>"></script>
+<script type="text/javascript" src="project_lib.js<?php echo "?a=$cache_arg" ?>"></script>
+<script type="text/javascript" src="components.js<?php echo "?a=$cache_arg" ?>"></script>
 </head>
 <body>
 <div id=root>
@@ -47,8 +51,18 @@
 		|
 		<div id=tool_export>EXPORT</div>
 		|
-		Snap to grid
+		Snap to grid:
 		<div><input id=tool_resolution type=text value=10 style="width:50px" /></div>
+		|
+		Skin:
+		<div>
+			<select id=tool_skin>
+				<option value="default">Default</option>
+				<option value="win98">Windows 98</option>
+				<option value="winxp">Windows XP</option>
+				<option value="bootstrap">Bootstrap</option>
+				<option value="cockpit">Cockpit</option>
+			</select></div>
 	</div>
 </div>
 
@@ -183,6 +197,15 @@
 	<div class=export-tab id=export_code_panel ><textarea></textarea></div>
 	<div class='export-tab hidden' id=export_code_panel_main><textarea></textarea></div>
 	<div class='export-tab hidden' id=export_preview_panel></div>
+</div>
+
+<div id=code_editor class=hidden>
+	<div class=icon-wrap id=code_toolbar>
+		<div id=label_info></div>
+		<div id=code_save>Save</div>
+		<div id=code_exit>Exit</div>
+	</div>
+	<div id=code_panel ><textarea></textarea></div>
 </div>
 
 

@@ -196,6 +196,16 @@ $(window).on('load', function (e) {
 	});
 	
 	
+	$('#code_save').bind('click', function(){
+		
+	});
+	
+	$('#code_exit').bind('click', function(){
+		$('#code_panel > textarea').text('');
+		$('#code_editor').hide();
+	});
+	
+	
 	
 	// drop file to import it
 	$('#root #main_center_wrap').bind('drop', function(e){
@@ -252,6 +262,11 @@ $(window).on('load', function (e) {
 	$('#file_opener').bind('change', function(e){
 		console.log(this);
 		console.log($(this).val());
+	});
+	
+	$('#tool_skin').bind('change', function(e){
+		var skin_name = $(this).val();
+		$('#templates').load('components/'+skin_name+'.html');
 	});
 	
 });
@@ -420,6 +435,13 @@ function initComponent(cmp_el) {
 	if (cmp_el.hasClass('form')) {
 		initForm(cmp_el);
 	}
+	
+	$(cmp_el).unbind('dblclick').bind('dblclick', function(){
+		var el_id = cmp_el.attr('id');
+		$('#code_editor #label_info').text(cmp_el.attr('cmp_type') + ' - ' + el_id);
+		$('#code_editor textarea').text("$('#"+el_id+"').bind('click', function(){\n\t\n})");
+		$('#code_editor').show();
+	});
 }
 
 function newComponent() {

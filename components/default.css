@@ -1,0 +1,97 @@
+#main_center .component {
+	position: absolute;
+	border: 1px solid #000;
+}
+#main_center .component.button {
+	text-align: center;
+	background-color: #c5c4bc;
+}
+#main_center .component.textbox {
+	background-color: #eee;
+	border: 1px solid #4b4a46;
+}
+#main_center .component.label {
+	background-color: transparent;
+	border: none;
+}
+
+#main_center .component.checkbox {
+	background-color: transparent;
+	border: none;
+}
+#main_center .component.radio {
+	background-color: transparent;
+	border: none;
+}
+#main_center .component.container {
+	/*overflow: auto;*/
+}
+#main_center .component.form {
+	z-index: 1000;
+	background: #c3c5bc;
+}
+#main_center .component.form .titlebar {
+	padding: 3px 0px 3px 10px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 20px;
+	background: #b2b490;
+	cursor: default;
+}
+#main_center .component.form .form-close {
+	position: absolute;
+	right: 5;
+	top: 8px;
+	cursor: default;
+}
+#main_center .component.form .form-close :hover {
+	background-color: #161612 !important;
+}
+#main_center .component.table {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	/*border: 1px solid #333333;*/
+}
+#main_center .component.table table * {
+	font-size: 11px;
+}
+#main_center .component.table table {
+	/*position: relative;*/
+	border-collapse: collapse;
+	border-left: 0px;
+	border-right: 0px;
+}
+#main_center .component.table td {
+	padding: 3px;
+	height: 15px;
+	min-width: 45px;
+	border: 1px solid #333333;
+	border-left: 0px;
+	border-bottom: 0px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+#main_center .component.table tr {
+	border: 0px;
+}
+#main_center .component.table tr:HOVER {
+	background-color: #AACCFF;
+}
+
+#main_center .component.table #r1 {
+	position: fixed;
+	background: #CCCCCC;
+}
+#main_center .component.table #r1 td {
+	border: 1px solid #CCCCCC;
+}
+
+#main_center .component.table #c1 { width: 60px; max-width: 60px; min-width: 60px; }
+#main_center .component.table #c2 { width: 60px; max-width: 60px; min-width: 60px; }
+#main_center .component.table #r1 #c1 { width: 60px; max-width: 60px; min-width: 60px; }
+#main_center .component.table #r1 #c2 { width: 55px; max-width: 55px; min-width: 55px;}
+
+.component .ui-resizable-se {
+    background-image: url("") !important;
+}
