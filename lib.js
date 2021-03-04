@@ -2,6 +2,7 @@
 
 var area, new_tmp_item, selected_new_cmp;
 var snap_resolution;
+var skin_name, skin_version;
 
 $(window).on('load', function (e) {
 	
@@ -56,6 +57,14 @@ $(window).on('load', function (e) {
 		//return true;
 		if (e.which == 46) {
 			deleteElement();
+		}
+		if (e.which == 120) { // F9
+			$('#export_generate').trigger('click');
+			$('#export_preview').trigger('click');
+			$('#tool_export').trigger('click');
+		}
+		if (e.which == 27) { // Esc
+			$('#cmp_select').trigger('click');
 		}
 	});
 	
@@ -265,10 +274,28 @@ $(window).on('load', function (e) {
 	});
 	
 	$('#tool_skin').bind('change', function(e){
-		var skin_name = $(this).val();
-		$('#templates').load('components/'+skin_name+'.html');
+		 skin_name = $(this).val();
+		skin_version = false;
+		var skin_arr = skin_name.split('.');
+		if (skin_arr.length == 2) {
+			skin_name = skin_arr[0];
+			skin_version = skin_arr[1];
+		}
+		var cache_arg = Math.random();
+		$('#templates').load('components/'+skin_name+'/'+skin_name+'.html?a='+cache_arg);
+		$('#components_style').load('components/'+skin_name+'/'+skin_name+'.css?a='+cache_arg);
+		if (skin_version) {
+			$('#main_center .component').attr('cmp_version', skin_version);
+		}
+		console.log('SKIN NAME:', skin_name, skin_version);
+		$.getScript('components/'+skin_name+'/'+skin_name+'.js?a='+cache_arg, function(){
+			//console.log('callback...');
+			components_loaded();
+		});
+		
 	});
 	
+	$('#tool_skin').trigger('change'); // load default
 });
 
 
@@ -356,6 +383,7 @@ function initProject() {
 		}
 		newComponent();
 	});
+	
 }
 
 function importProject() {
@@ -420,6 +448,12 @@ function initComponent(cmp_el) {
 		if (!$(tgt).hasClass('component')) {
 			tgt = $(tgt).closest('.component')[0];
 		}
+
+		/*$('#mouse_x').text($(cmp_el)[0].offsetLeft);
+		$('#mouse_y').text($(cmp_el)[0].offsetTop);
+		$('#mouse_x_drag').text($(cmp_el)[0].clientWidth);
+		$('#mouse_y_drag').text($(cmp_el)[0].clientHeight);*/
+		
 		var tgt_id = $(tgt).attr('id');
 		if ($('.clicked').attr('id') == tgt_id) {
 			console.log('already selected...');
@@ -431,6 +465,7 @@ function initComponent(cmp_el) {
 		fillPropertiesTable();
 		$('.project_element').removeClass('selected');
 		$('[el_id='+ tgt_id +']').addClass('selected');
+		
 	});
 	if (cmp_el.hasClass('form')) {
 		initForm(cmp_el);
@@ -447,7 +482,12 @@ function initComponent(cmp_el) {
 function newComponent() {
 	var cmp_type = $('#components > .selected').attr('id').replace('new_', '');
 	//var cmp_type = selected_new_cmp.replace('new_', '');
-	var cmp_id = cmp_type + '_' + Date.now()+''+parseInt(Math.random()*1000);
+	var count_that_type = $('#root #main_center .component[cmp_type='+cmp_type+']').length;
+	var new_index = parseInt(count_that_type) + 1;
+	//var cmp_id = cmp_type + '_' + Date.now()+''+parseInt(Math.random()*1000);
+	var cmp_id = cmp_type + '_' + new_index;
+	var count_all = $('#root #main_center .component').length;
+	var new_tab_index = parseInt(count_all) + 1;
 	
 	var cmp_left = snapToGrid($('#new_tmp_item').css('left'));
 	var cmp_top = snapToGrid($('#new_tmp_item').css('top'));
@@ -472,13 +512,19 @@ function newComponent() {
 	
 	cmp_el = $('#templates > .design.' + cmp_type).clone().css(cmp_css).attr('id', cmp_id).addClass('component');
 	cmp_el.attr('cmp_type', cmp_type);
+	cmp_el.attr('cmp_version', skin_version);
+	
+	var has_focus_arr = ['button', 'textbox', 'textarea', 'checkbox', 'radio', 'combo'];
+	if (has_focus_arr.indexOf(cmp_type) != -1) {
+		cmp_el.attr('tabindex', new_tab_index);
+	}
 	//$('#root #main_center').append(cmp_el);
 	area.append(cmp_el);
 	updateElementList();
 	
 	initComponent(cmp_el);
 	cmp_el.trigger('click');
-	
+	$('#new_tmp_item').html('');
 }
 
 function snapToGrid(value) {

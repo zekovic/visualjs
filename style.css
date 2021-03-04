@@ -3,19 +3,20 @@
 	top: 0px;
 	left: 0px;
 	right: 0px;
-	height: 50px;
+	height: 45px;
 }
 
 #main_left {
 	width: 90px;
+	max-width: 25%;
 	bottom: 30px;
 	left: 0px;
-	top: 50px;
+	top: 45px;
 }
 
 #main_right {
 	width: 300px;
-	top: 50px;
+	top: 45px;
 	bottom: 30px;
 	right: 0px;
 }
@@ -26,7 +27,10 @@
 	height: 30px;
 	bottom: 0px;
 }
-#main_down > span {
+#coords_status {
+	padding: 7px 30px;
+}
+#coords_status > span {
 	display: inline-block;
 	width: 30px;
 	text-align: right;
@@ -35,18 +39,15 @@
 	border: 1px solid #3333AA;
 }
 
-#main_left {
-	width: 95px;
-	max-width: 25%;
-	
-}
-
 #main_left > #components > div {
-	margin: 3px;
-	padding: 7px 15px;
+	margin: 0px;
+	padding: 7px 20px;
 }
-#main_left > #components > .selected, #main_left > #components > div:HOVER {
+#main_left > #components > .selected {
 	background-color: #56bdf5;
+}
+#main_left > #components > div:HOVER {
+	background-color: #a3dcfb;
 	
 }
 
@@ -64,7 +65,7 @@
 #main_center_wrap {
 	left: 90px;
 	right: 300px;
-	top: 50px;
+	top: 45px;
 	bottom: 30px;
 	background-color: #dbdbd8;
 }
@@ -94,7 +95,7 @@
 }
 
 
-#main_center > #new_tmp_item {
+#main_center /*>*/ #new_tmp_item {
 	width: 0px;
 	height: 0px;
 	top: -10px;
@@ -106,10 +107,10 @@
 	margin: 5px;
 }
 
-#toolbar {
-	border: 1px solid #333333;
-	margin: 3px;
-	padding: 2px;
+#toolbar, #export_toolbar {
+	margin: 0px;
+	padding: 12px 10px;
+	background-color: #aeaeae;
 }
 #toolbar > div, #export_toolbar > div, #code_toolbar > div {
 	display: inline;
@@ -123,12 +124,18 @@
 	display: inline;
 }
 
+.icon-wrap {
+	cursor: default;
+}
+
 .icon-wrap > div {
-	border: 1px solid #333333;
 	width: 32px;
 	height: 32px;
-	margin: 2px;
+	margin: 5px;
 	cursor: default;
+	background-color: #edeff1;
+	color: #1d2123;
+	padding: 6px 12px;
 }
 .icon-wrap > div:hover {
 	background-color: #CCCCCC;

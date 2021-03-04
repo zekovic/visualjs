@@ -13,6 +13,9 @@ $cache_arg = time();
 
 <link id=all_style rel="stylesheet" type="text/css" href="style.css<?php echo "?a=$cache_arg" ?>"/>
 <link id=project_style rel="stylesheet" type="text/css" href="project_style.css<?php echo "?a=$cache_arg" ?>"/>
+<style type="text/css" id=components_style ></style> 
+<script type="text/javascript" id=components_script></script>
+
 <script type="text/javascript" src="lib.js<?php echo "?a=$cache_arg" ?>"></script>
 <script type="text/javascript" src="project_lib.js<?php echo "?a=$cache_arg" ?>"></script>
 <script type="text/javascript" src="components.js<?php echo "?a=$cache_arg" ?>"></script>
@@ -21,7 +24,7 @@ $cache_arg = time();
 <div id=root>
 
 <div id=main_top>
-	<div id=main_menu>
+	<div id=main_menu class=hidden>
 		<div>File</div>
 		<div>Edit</div>
 		<div>View</div>
@@ -42,8 +45,7 @@ $cache_arg = time();
 		<div id=tool_save>SAVE</div>
 		|
 		<div id=tool_delete>DELETE</div>
-		|
-		<div>DOCK:</div>
+		<span>DOCK:</span>
 		<div id=tool_dock_left>Left</div>
 		<div id=tool_dock_right>Right</div>
 		<div id=tool_dock_top>Top</div>
@@ -52,22 +54,25 @@ $cache_arg = time();
 		<div id=tool_export>EXPORT</div>
 		|
 		Snap to grid:
-		<div><input id=tool_resolution type=text value=10 style="width:50px" /></div>
+		<span><input id=tool_resolution type=text value=10 style="width:50px" /></span>
 		|
 		Skin:
-		<div>
+		<span>
 			<select id=tool_skin>
-				<option value="default">Default</option>
+				<option value="default.blue">Default</option>
+				<option value="default.gold">Default - Gold</option>
+				<option value="default.green">Default - Green</option>
 				<option value="win98">Windows 98</option>
 				<option value="winxp">Windows XP</option>
 				<option value="bootstrap">Bootstrap</option>
 				<option value="cockpit">Cockpit</option>
-			</select></div>
+			</select>
+		</span>
 	</div>
 </div>
 
 <div id=main_left>
-	<div id=components class=iXcon-wrap>
+	<div id=components>
 		<div id=cmp_select class=selected title="Select element"><img src="components/cursor.png"/></div>
 		
 		<div id=new_label title="Label"><img src="components/label.png"/></div>
@@ -109,77 +114,21 @@ $cache_arg = time();
 </div>
 
 <div id=main_down>
-	X <span id=mouse_x> </span> 
-	<span></span> 
-	Y <span id=mouse_y></span> 
-	<span></span> 
-	W <span id=mouse_x_drag></span> 
-	<span></span> 
-	H <span id=mouse_y_drag></span>
-	<span></span> 
-	
+	<div id=coords_status>
+		X: <span id=mouse_x> </span> 
+		<span></span> 
+		Y: <span id=mouse_y></span> 
+		<span></span> 
+		W: <span id=mouse_x_drag></span> 
+		<span></span> 
+		H: <span id=mouse_y_drag></span>
+		<span></span> 
+	</div>
 </div>
 
 </div>
 
 <div id=templates class=hidden>
-	
-	<div class='design real button'>
-		<span>Button</span>
-	</div>
-	
-	<div class='design textbox'>Textbox</div>
-	<input class='real textbox' />
-	
-	<div class='design textarea'>Textarea</div>
-	<textarea class='real textarea' >Textarea</textarea>
-	
-	<div class='design real label'>Label</div>
-	
-	<div class="design real container panel"></div>
-	
-	<div class="design real container form">
-		<div class='form-btn form-close ui-icon ui-icon-closethick'></div>
-		<div class=titlebar>Form</div>
-	</div>
-	
-	<div class='design real image'>IMG</div>
-	
-	<div class='design real checkbox'>
-		<input type=checkbox id=check_id />
-		<label for=check_id>Checkbox</label>
-	</div>
-	
-	<div class='design real radio'>
-		<input type=radio id=radio_id />
-		<label for=radio_id>Radio</label>
-	</div>
-	
-	<div class='design combo'>Combo box</div>
-	<select class='real combo'>
-		<option value='option1'>Option 1</option>
-		<option value='option2'>Option 2</option>
-		<option value='option3'>Option 3</option>
-	</select>
-	
-	<div class='design real list'>List</div>
-	
-	<div class='design real table'>
-		<table>
-			<tr id=r1> <td id=c1>Column1</td> <td id=c2>Column2</td> <td id=c3>Column3</td> </tr>
-			<tr> <td id=c1>&nbsp</td>    <td id=c2></td>    <td id=c3></td> </tr>
-			<tr> <td></td>    <td></td>    <td></td> </tr>
-			<tr> <td></td>    <td></td>    <td></td> </tr>
-			<tr> <td></td>    <td></td>    <td></td> </tr>
-			<tr> <td></td>    <td></td>    <td></td> </tr>
-			<tr> <td></td>    <td></td>    <td></td> </tr>
-			<tr> <td></td>    <td></td>    <td></td> </tr>
-		</table>
-	</div>
-	
-	<div class='design real shape'>SHP</div>
-	<div class='design real line'>LIN</div>
-	
 	
 </div>
 
