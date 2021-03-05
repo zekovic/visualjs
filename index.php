@@ -163,10 +163,13 @@ $cache_arg = time();
 		
 		<template__script type="text/javascript" src="jquery-3.5.1.js"></template__script>
 		<template__script type="text/javascript" src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></template__script>
-		<template__link rel="stylesheet" type="text/css" href="jquery-ui-1.12.1.custom/jquery-ui.min.css"/>
+		<template__link rel="stylesheet" type="text/css" href="jquery-ui-1.12.1.custom/jquery-ui.min.css"></template__link>
 		
-		<template__link rel="stylesheet" type="text/css" href="project_style.css"/>
+		<template__link rel="stylesheet" type="text/css" href="project_style.css"></template__link>
 		<template__script type="text/javascript" src="project_lib.js"></template__script>
+		
+		<template__link rel="stylesheet" type="text/css" id="project_components_style" href=""></template__link>
+		<template__script type="text/javascript" id="project_components_script" src=""></template__script>
 	</template__head>
 	<template__body>
 		<template__div id="main_center_wrap">

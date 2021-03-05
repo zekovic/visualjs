@@ -35,6 +35,9 @@
 	border: 1px solid #000;
 }
 
+#main_center .nobreak {
+	white-space: pre;
+}
 
 #main_center .component.button {
 	border: 0px solid #000;
@@ -60,7 +63,12 @@
 	left: 50%;
 }
 
-
+#main_center .component.panel {
+	border-radius: 5px;
+}
+#main_center .component.panel > span.cmplabel {
+	margin: 7px;
+}
 
 #main_center .component.textbox {
 	/*background-color: #eee;*/
@@ -95,6 +103,7 @@
 
 #main_center .component.form {
 	z-index: 1000;
+	border-radius: 5px;
 	/*background: #c3c5bc;*/
 }
 #main_center .component.form .titlebar {

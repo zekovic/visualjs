@@ -41,7 +41,7 @@ form_components.createNew = function(cmp_type) {
 
 
 var common_properties = [
-	'id', 'name', 'class', 'text'
+	'id', 'name', 'class', /*'text',*/ 'label'
 ];
 
 var css_properties = [
@@ -66,20 +66,37 @@ function getProperties(element) {
 	}
 	for (i in common_properties) {
 		var pname = common_properties[i];
-		if (pname == 'text') {
+		/*if (pname == 'text') {
 			if (cmp_type == 'image') { prop_values[pname] = el.text(); }
 			else if (cmp_type == 'label') { prop_values[pname] = el.text(); }
 			else if (cmp_type == 'textbox') { prop_values[pname] = el.text(); }
 			else if (cmp_type == 'textarea') { prop_values[pname] = el.text(); }
-			else if (cmp_type == 'form') { prop_values[pname] = '';/* nothing */ }
+			else if (cmp_type == 'form') { prop_values[pname] = ''; } // nothing
 			else if (cmp_type == 'button') { prop_values[pname] = el.find('> span').text(); }
 			else if (cmp_type == 'checkbox') {  prop_values[pname] = el.find('> label').text(); }
 			else if (cmp_type == 'radio') { prop_values[pname] = el.find('> label').text(); }
-			else if (cmp_type == 'combo') { prop_values[pname] = '';/* nothing */ }
+			else if (cmp_type == 'combo') { prop_values[pname] = ''; } // nothing
 			else if (cmp_type == 'list') {prop_values[pname] = '';}
 			else if (cmp_type == 'panel') {prop_values[pname] = '';}
 			else if (cmp_type == 'table') {prop_values[pname] = '';}
 			else { prop_values[pname] = ''; }
+		}*/
+		if (pname == 'label') {
+			prop_values[pname] = getLabel(element);
+		}
+		else if (pname == 'id') {
+			if (cmp_type == 'radio' || cmp_type == 'checkbox') {
+				var inner_attr = el.find('input').attr('id');
+				prop_values[pname] = inner_attr;
+			}
+			else {prop_values[pname] = el.attr(pname);}
+		}
+		else if (pname == 'name') {
+			if (cmp_type == 'radio' || cmp_type == 'checkbox') {
+				var inner_attr = el.find('input').attr('name');
+				prop_values[pname] = inner_attr;
+			}
+			else {prop_values[pname] = el.attr(pname);}
 		}
 		else { prop_values[pname] = el.attr(pname); }
 	}
@@ -93,7 +110,7 @@ function getProperties(element) {
 	}
 	
 	if (cmp_type == 'form') {
-		prop_values['title'] = el.find('> .titlebar').text();
+		//prop_values['title'] = el.find('> .titlebar').text();
 		prop_values['modal'] = '';
 		prop_values['resizable'] = '';
 		prop_values['openOnLoad'] = '';
@@ -117,28 +134,52 @@ function setProperty(element, prop, val) {
 		return true;
 	}
 	
-	if (prop == 'id') { if (!val || $('#'+val).length) {return false;} el.attr('id', val); }
-	if (prop == 'name') { el.attr('name', val); }
+	if (prop == 'id') {
+		if (!val || $('#'+val).length) {return false;}
+		if (cmp_type == 'radio' || cmp_type == 'checkbox') {
+			//var inner_attr = el.find('input').attr('id');
+			el.find('input').attr('id', val);
+			el.find('label').attr('for', val);
+			el.attr('id', val+'_wrap');
+		} else {
+			el.attr('id', val);
+		}
+		
+	}
+	if (prop == 'name') {
+		if (cmp_type == 'radio' || cmp_type == 'checkbox') {
+			el.find('input').attr('name', val);
+			el.attr('name', val+'_wrap');
+		}
+		else {
+			el.attr('name', val);
+		}
+	}
 	if (prop == 'class') { el.attr('class', val) }
-	if (prop == 'text') {
+	/*if (prop == 'text') {
 		
 		if (cmp_type == 'image') { el.text(val); }
 		else if (cmp_type == 'label') { el.text(val); }
 		else if (cmp_type == 'textbox') { el.val(val); el.text(val); } // .design
 		else if (cmp_type == 'textarea') { el.val(val); el.text(val); } // .design
-		else if (cmp_type == 'form') { /* nothing */ }
+		else if (cmp_type == 'form') {  } // nothing
 		else if (cmp_type == 'button') { el.find('> span').text(val); }
 		else if (cmp_type == 'checkbox') {  el.find('> label').text(val); }
 		else if (cmp_type == 'radio') { el.find('> label').text(val); }
-		else if (cmp_type == 'combo') { /* nothing */ }
+		else if (cmp_type == 'combo') {  } // nothing
 		else if (cmp_type == 'list') {}
 		else if (cmp_type == 'panel') {}
 		else if (cmp_type == 'table') {}
 		else { el.text(val); }
 		
+	}*/
+	if (prop == 'label') {
+		setLabel(element, val);
 	}
 	if (prop == 'title') { el.find('> .titlebar').text(val); }
+	
 	if (prop == '') {  }
+	
 	if (prop == '') {  }
 	if (prop == '') {  }
 	if (prop == '') {  }
@@ -152,4 +193,18 @@ function setProperty(element, prop, val) {
 	if (prop == '') {  }
 	
 	return true;
+}
+
+function setLabel(element, label_text) {
+	var el = $(element);
+	if (el.hasClass('cmplabel')) { el.text(label_text); }
+	else { $(el.find('.cmplabel')[0]).text(label_text); }
+	//if (el.hasClass('cmpval')) { el.val(label_text); }
+	//else { el.find('.cmpval').val(label_text); }
+}
+
+function getLabel(element) {
+	var el = $(element);
+	if (el.hasClass('cmplabel')) { return el.text(); }
+	else { return $(el.find('.cmplabel')[0]).text(); }
 }

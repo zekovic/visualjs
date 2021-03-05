@@ -175,6 +175,10 @@ $(window).on('load', function (e) {
 		copied.find('.removing').remove();
 		copied.find('.component.form').draggable({'handle':'.titlebar'}); // for code
 		copied.find('.component').removeClass('design real')/*.removeAttr('cmp_type')*/;
+		
+		$('#project_components_style').attr('href', 'components/'+skin_name+'/'+skin_name+'.css');
+		$('#project_components_script').attr('src', 'components/'+skin_name+'/'+skin_name+'.js');
+		
 		var html_template = $('#template_project').html().replaceAll('template__', '');
 		$('#export_code_panel > textarea').text(html_template.replace('___main_code_here___', copied.html()));
 		$('#export_code_panel_main > textarea').text(copied.html());
@@ -510,17 +514,26 @@ function newComponent() {
 		'cursor': 'default'
 	};
 	
-	cmp_el = $('#templates > .design.' + cmp_type).clone().css(cmp_css).attr('id', cmp_id).addClass('component');
+	cmp_el = $('#templates > .design.' + cmp_type).clone().css(cmp_css)/*.attr('id', cmp_id)*/.addClass('component');
 	cmp_el.attr('cmp_type', cmp_type);
 	cmp_el.attr('cmp_version', skin_version);
 	
-	var has_focus_arr = ['button', 'textbox', 'textarea', 'checkbox', 'radio', 'combo'];
+	var has_focus_arr = ['button', 'textbox', 'textarea', /*'checkbox', 'radio',*/ 'combo'];
 	if (has_focus_arr.indexOf(cmp_type) != -1) {
 		cmp_el.attr('tabindex', new_tab_index);
 	}
+	
+	// New name "Button 3"...
+	var Cmp_type = cmp_type.charAt(0).toUpperCase() + cmp_type.slice(1);
+	setLabel(cmp_el, Cmp_type+' '+new_index);
+	
 	//$('#root #main_center').append(cmp_el);
 	area.append(cmp_el);
+	//if (cmp_type == 'radio' || cmp_type == 'checkbox') {
+		setProperty(cmp_el, 'id', cmp_id);
+	//}
 	updateElementList();
+	
 	
 	initComponent(cmp_el);
 	cmp_el.trigger('click');
