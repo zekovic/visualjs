@@ -40,7 +40,7 @@ $cache_arg = time();
 		<div>Help</div>
 	</div>
 	
-	<div id=toolbar class=icon-wrap>
+	<div id=toolbar class="icon-wrap noselect">
 		<div id=tool_open>OPEN</div>
 		<div id=tool_save>SAVE</div>
 		|
@@ -54,7 +54,7 @@ $cache_arg = time();
 		<div id=tool_export>EXPORT</div>
 		|
 		Snap to grid:
-		<span><input id=tool_resolution type=text value=10 style="width:50px" /></span>
+		<span><input id=tool_resolution type=text value=8 style="width:50px" /></span>
 		|
 		Skin:
 		<span>
@@ -72,7 +72,7 @@ $cache_arg = time();
 </div>
 
 <div id=main_left>
-	<div id=components>
+	<div id=components class="noselect">
 		<div id=cmp_select class=selected title="Select element"><img src="components/cursor.png"/></div>
 		
 		<div id=new_label title="Label"><img src="components/label.png"/></div>
@@ -88,11 +88,27 @@ $cache_arg = time();
 	</div>
 </div>
 
+<div id=main_center_tabs class="noselect">
+	<div id=tab_design_editor class='tab-selected'>Design</div>
+	<div id=tab_code_editor>Code</div>
+</div>
+
 <div id=main_center_wrap>
 	<div id=main_center class='component container project'>
 		<div id=new_tmp_item class=component></div>
 		
 	</div>
+</div>
+
+<div id=code_editor class=hidden>
+	<div class=icon-wrap id=code_toolbar>
+		<div id=label_info></div>
+		<div><select id=code_components_list></select></div>
+		<div><select id=code_events_list></select></div>
+		<div id=code_save>Save</div>
+		<div id=code_exit>Exit</div>
+	</div>
+	<div id=code_panel ><textarea></textarea></div>
 </div>
 
 <div id=main_right>
@@ -146,14 +162,6 @@ $cache_arg = time();
 	<div class='export-tab hidden' id=export_preview_panel></div>
 </div>
 
-<div id=code_editor class=hidden>
-	<div class=icon-wrap id=code_toolbar>
-		<div id=label_info></div>
-		<div id=code_save>Save</div>
-		<div id=code_exit>Exit</div>
-	</div>
-	<div id=code_panel ><textarea></textarea></div>
-</div>
 
 
 <div id=template_project class=hidden>
@@ -170,6 +178,7 @@ $cache_arg = time();
 		
 		<template__link rel="stylesheet" type="text/css" id="project_components_style" href=""></template__link>
 		<template__script type="text/javascript" id="project_components_script" src=""></template__script>
+		<template__script type="text/javascript" id="project_events_script"></template__script>
 	</template__head>
 	<template__body>
 		<template__div id="main_center_wrap">

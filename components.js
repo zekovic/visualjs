@@ -208,3 +208,73 @@ function getLabel(element) {
 	if (el.hasClass('cmplabel')) { return el.text(); }
 	else { return $(el.find('.cmplabel')[0]).text(); }
 }
+
+
+var common_events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'keydown', 'keyup', 'keypress'];
+
+function getEvents(element) {
+	var el = $(element);
+	element = el[0];
+	var cmp_type = el.attr('cmp_type');
+	
+	var events_arr = [].concat(common_events);
+	
+	if (element.cmp_events === undefined || !element.cmp_events) {
+		element.cmp_events = [];
+	}
+	
+	if (cmp_type == 'button') {
+		
+	}
+	
+	if (cmp_type == 'text') {
+		events_arr = events_arr.concat(['change']);
+		
+	}
+	
+	if (cmp_type == 'textarea') {
+		events_arr = events_arr.concat(['change']);
+	}
+	if (cmp_type == 'combo') {
+		events_arr = events_arr.concat(['change']);
+	}
+	if (cmp_type == 'radio') {
+		events_arr = events_arr.concat(['change']);
+	}
+	if (cmp_type == 'checkbox') {
+		events_arr = events_arr.concat(['change']);
+	}
+	if (cmp_type == 'form') {
+		events_arr = events_arr.concat(['open', 'close', 'move', 'maximize', 'minimize', 'restore', 'resize']);
+	}
+	
+	var events_obj = {};
+	for (var i in events_arr) {
+		//events_obj[events_arr[i]] = {content:''};
+		events_obj[events_arr[i]] = '';
+		if (element.cmp_events[events_arr[i]] !== undefined) {
+			//events_obj[events_arr[i]].content = element.cmp_events[events_arr[i]];
+			events_obj[events_arr[i]] = element.cmp_events[events_arr[i]];
+		}
+	}
+	
+	return events_obj;
+}
+
+function getEventValue(element, event_name) {
+	var el = $(element);
+	element = el[0];
+	if (element.cmp_events === undefined || !element.cmp_events) {
+		element.cmp_events = [];
+	}
+	return (element.cmp_events[event_name] !== undefined ? element.cmp_events[event_name] : '');
+}
+
+function setEvent(element, event_name, content) {
+	var el = $(element);
+	element = el[0];
+	if (element.cmp_events === undefined || !element.cmp_events) {
+		element.cmp_events = [];
+	}
+	element.cmp_events[event_name] = content;
+}

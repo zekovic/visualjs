@@ -21,7 +21,7 @@ function initLoadedPage() {
 
 function initForm(el) {
 	var arg = {handle:'.titlebar'};
-	console.log(el);
+	//console.log(el);
 	if (!$(el).closest('#export_preview_panel').length) {
 		var res = getSnapResolution();
 		if (res) { arg.grid = [ res, res ]; }

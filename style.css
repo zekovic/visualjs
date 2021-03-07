@@ -62,12 +62,59 @@
 #main_left #components #new_panel {}
 #main_left #components #new_table {}
 
-#main_center_wrap {
+#main_center_tabs {
 	left: 90px;
 	right: 300px;
 	top: 45px;
+	bottom: 70px;
+	background-color: #cfd5dc;
+}
+
+#main_center_tabs > div {
+	display: inline-block;
+	border: 1px solid #cecece;
+	height: 24px;
+	margin: 5px 1px;
+	padding: 2px 10px;
+	width: 135px;
+	background-color: #9d9d9d;
+	border-radius: 3px;
+	cursor: default;
+}
+
+#main_center_tabs > div:hover {
+	background-color: #b0b0b0;
+}
+#main_center_tabs .tab-selected {
+	border: 1px solid #000000;
+	font-weight: bold;
+}
+
+
+#main_center_wrap, #code_editor {
+	left: 90px;
+	right: 300px;
+	top: 70px;
 	bottom: 30px;
 	background-color: #dbdbd8;
+}
+
+
+#code_editor {
+	position: absolute;
+	z-index: 10000;
+	/*left: 80px;
+	top: 80px;
+	right: 300px;
+	bottom: 300px;
+	border: 1px solid #555;*/
+	background: #ddd;
+}
+#code_panel textarea {
+	width: 100%;
+	height: 96%;
+	font-family: monospace;
+	resize: none;
 }
 
 #root > #main_center_wrap {
@@ -107,7 +154,7 @@
 	margin: 5px;
 }
 
-#toolbar, #export_toolbar {
+#toolbar, #export_toolbar, #code_toolbar {
 	margin: 0px;
 	padding: 12px 10px;
 	background-color: #aeaeae;
@@ -135,7 +182,7 @@
 	cursor: default;
 	background-color: #edeff1;
 	color: #1d2123;
-	padding: 6px 12px;
+	padding: 3px 12px;
 }
 .icon-wrap > div:hover {
 	background-color: #CCCCCC;
@@ -235,22 +282,10 @@
 	height: 88%;
 	background: #f1f3dc;
 }
-
-
-
-#code_editor {
+#export_preview_panel > iframe {
 	position: absolute;
-	z-index: 10000;
-	left: 80px;
-	top: 80px;
-	right: 300px;
-	bottom: 300px;
-	background: #fff;
-	border: 1px solid #555;
+	width: 98%;
+	height: 86%;
+	border: 1px solid #777;
 }
-#code_panel textarea {
-	width: 100%;
-	height: 100%;
-	font-family: monospace;
-	resize: none;
-}
+

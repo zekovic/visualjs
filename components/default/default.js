@@ -5,6 +5,6 @@
 }*/
 
 window.components_loaded = function() {
-	console.log('DEFAULT LOADED...');
+	//console.log('DEFAULT LOADED...');
 	
 }

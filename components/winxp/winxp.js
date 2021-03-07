@@ -5,6 +5,6 @@
 }*/
 
 window.components_loaded = function() {
-	console.log('XP LOADED...');
+	//console.log('XP LOADED...');
 	
 }
