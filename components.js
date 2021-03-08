@@ -227,7 +227,7 @@ function getEvents(element) {
 		
 	}
 	
-	if (cmp_type == 'text') {
+	if (cmp_type == 'textbox') {
 		events_arr = events_arr.concat(['change']);
 		
 	}
@@ -277,4 +277,10 @@ function setEvent(element, event_name, content) {
 		element.cmp_events = [];
 	}
 	element.cmp_events[event_name] = content;
+}
+
+function getFunctionBody(fnc) {
+	var fn_begin = fnc.indexOf('{') + 1;
+	var fn_end = fnc.lastIndexOf('}');
+	return fnc.substring(fn_begin, fn_end).trim();
 }

@@ -115,6 +115,9 @@
 	height: 96%;
 	font-family: monospace;
 	resize: none;
+	-moz-tab-size : 4;
+	-o-tab-size : 4;
+	tab-size : 4;
 }
 
 #root > #main_center_wrap {
@@ -275,6 +278,9 @@
 	height: 100%;
 	font-family: monospace;
 	resize: none;
+	-moz-tab-size : 4;
+	-o-tab-size : 4;
+	tab-size : 4;
 }
 #export_preview_panel {
 	margin: 30px 5px 5px 5px;
@@ -289,3 +295,6 @@
 	border: 1px solid #777;
 }
 
+#code_components_list, #code_events_list {
+	width: 200px;
+}
