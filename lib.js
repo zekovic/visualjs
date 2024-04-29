@@ -363,13 +363,13 @@ function initProject() {
 		//$(e.target).css('z-index', 1000);
 		//new_tmp_item.css('z-index', 900);
 		
-		if (e.which == 0) {
+		if (e.buttons == 0) {
 			$('#mouse_x').text(e.offsetX);
 			$('#mouse_y').text(e.offsetY);
 			$('#mouse_x_drag').text('');
 			$('#mouse_y_drag').text('');
 		}
-		if (e.which == 1) {
+		if (e.buttons == 1) {
 			
 			var distance = 6;
 			
