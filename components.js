@@ -215,7 +215,18 @@ var common_events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', '
 function getEvents(element) {
 	var el = $(element);
 	element = el[0];
+	
+	el_id = removeWrapFromId(el.attr('id'));
+	el = $('#'+el_id);
+	element = el[0];
+	
 	var cmp_type = el.attr('cmp_type');
+	if (!cmp_type) {
+		/*el=el.closest("[id$=_wrap]");
+		element = el[0];
+		cmp_type = el.attr('cmp_type');*/
+		cmp_type = el.closest("[id$=_wrap]").attr('cmp_type');
+	}
 	
 	var events_arr = [].concat(common_events);
 	
@@ -264,6 +275,11 @@ function getEvents(element) {
 function getEventValue(element, event_name) {
 	var el = $(element);
 	element = el[0];
+	
+	el_id = removeWrapFromId(el.attr('id'));
+	el = $('#'+el_id);
+	element = el[0];
+	
 	if (element.cmp_events === undefined || !element.cmp_events) {
 		element.cmp_events = [];
 	}
@@ -273,10 +289,16 @@ function getEventValue(element, event_name) {
 function setEvent(element, event_name, content) {
 	var el = $(element);
 	element = el[0];
+	
+	el_id = removeWrapFromId(el.attr('id'));
+	el = $('#'+el_id);
+	element = el[0];
+	
 	if (element.cmp_events === undefined || !element.cmp_events) {
 		element.cmp_events = [];
 	}
 	element.cmp_events[event_name] = content;
+	//console.log(el_id);
 }
 
 function getFunctionBody(fnc) {

@@ -173,8 +173,8 @@ $cache_arg = time();
 		<template__script type="text/javascript" src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></template__script>
 		<template__link rel="stylesheet" type="text/css" href="jquery-ui-1.12.1.custom/jquery-ui.min.css"></template__link>
 		
-		<template__link rel="stylesheet" type="text/css" href="project_style.css"></template__link>
-		<template__script type="text/javascript" src="project_lib.js"></template__script>
+		<template__link rel="stylesheet" type="text/css" href="project_style.css<?php echo "?a=$cache_arg" ?>"></template__link>
+		<template__script type="text/javascript" src="project_lib.js<?php echo "?a=$cache_arg" ?>"></template__script>
 		
 		<template__link rel="stylesheet" type="text/css" id="project_components_style" href=""></template__link>
 		<template__script type="text/javascript" id="project_components_script" src=""></template__script>

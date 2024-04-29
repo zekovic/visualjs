@@ -178,10 +178,12 @@ $(window).on('load', function (e) {
 			var this_el = $(this);
 			var i;
 			var el_id = this_el.attr('id');
+			el_id = removeWrapFromId(el_id);
+			this_el = $('#'+el_id);
 			
 			if (el_id != 'new_tmp_item' && el_id != 'main_center') {
 				var el_events = getEvents(this_el);
-				console.log(el_events);
+				//console.log(el_id, el_events);
 				for (i in el_events) {
 					if (el_events[i] != '') {
 						event_tabs = '\t'+el_events[i].split('\n').join('\n\t');
@@ -197,12 +199,22 @@ $(window).on('load', function (e) {
 		copied.find('.component.form').draggable({'handle':'.titlebar'}); // for code
 		copied.find('.component').removeClass('design real cmplabel')/*.removeAttr('cmp_type')*/;
 		
-		$('#project_components_style').attr('href', 'components/'+skin_name+'/'+skin_name+'.css');
-		$('#project_components_script').attr('src', 'components/'+skin_name+'/'+skin_name+'.js');
+		var cache_arg = Math.random();
+		$('#project_components_style').attr('href', 'components/'+skin_name+'/'+skin_name+'.css'+'?a='+cache_arg);
+		$('#project_components_script').attr('src', 'components/'+skin_name+'/'+skin_name+'.js'+'?a='+cache_arg);
 		
-		$('#project_events_script').html("\n$(window).on('load.generated', function (e) {\n"+events_script+"\n});");
+		$('#project_events_script').html("\n$(window).on('load.generated', function (e) {\n"+events_script+"\n});\n\n\t\t");
 		
 		var html_template = $('#template_project').html().replaceAll('template__', '');
+		html_template = html_template.replaceAll("><link ", ">\n\t\t<link ");
+		html_template = html_template.replaceAll("><script ", ">\n\t\t<script ");
+		html_template = html_template.replaceAll("\n\t<script ", "\n\t\t<script ");
+		html_template = html_template.replaceAll("\n\t<link ", "\n\t\t<link ");
+		//html_template = html_template.replaceAll("</script>", "</script>\n");
+		//html_template = html_template.replaceAll("<script", "\n\t\t<script");
+		//html_template = html_template.replaceAll("</link>", "</link>\n");
+		//html_template = html_template.replaceAll("<link", "\n\t\t<link");
+		html_template = html_template.replace("</head>", "\n\t</head>");
 		var whole_html = html_template.replace('___main_code_here___', copied.html());
 		var run_preview_script = "<script type='text/javascript'>$(window).trigger('load')</script>";
 		$('#export_code_panel > textarea').text(whole_html);
@@ -415,6 +427,23 @@ function initProject() {
 		newComponent();
 	});
 	
+	//$(cmp_el).unbind('dblclick').bind('dblclick', function(e){
+	$('#root #main_center').unbind('dblclick').bind('dblclick', function(e){
+		var cmp_el = $(e.target);
+		if (!cmp_el.hasClass('component')) {
+			cmp_el = cmp_el.closest('.component');
+		}
+		console.log(cmp_el, cmp_el.attr('id'));
+		//return;
+		var el_id = cmp_el.attr('id');
+		el_id = removeWrapFromId(el_id);
+		//$('#code_editor #label_info').text(cmp_el.attr('cmp_type') + ' - ' + el_id);
+		$('#code_editor textarea').text("");
+		openCodeEditor();
+		$('#code_components_list').val(el_id);
+		onCmpListChange();
+	});
+	
 	setSkin();
 	setGridResolution();
 	
@@ -465,6 +494,24 @@ function importProject() {
 	//console.log('TEST', project_tmp.find('> .component'));
 	$('#root #main_center').append(project_tmp.find('> .component'));
 	
+	// custom imports
+	//console.log('importing:', $('#loading_file')); //return;
+	//$('#template_project template__head').append($('#loading_file head .custom'));
+	$('#template_project template__head').append($('#loading_file title').parent().find('.custom'));
+	var cache_arg = Math.random();
+	$('#template_project template__head script.nocache').each(function(){
+		var source_path = $(this).attr('src');
+		if (source_path) {
+			$(this).attr('src', source_path + '?a='+cache_arg);
+		}
+	});
+	$('#template_project template__head link.nocache').each(function(){
+		var source_path = $(this).attr('href');
+		if (source_path) {
+			$(this).attr('href', source_path + '?a='+cache_arg);
+		}
+	});
+	
 	
 	var events_script_text = $('#loading_file #project_events_script').text();
 	$('.component').unbind('.generated');
@@ -478,8 +525,11 @@ function importProject() {
 		var this_el = $(this);
 		//initComponent($(this));
 		
+		var el_id = removeWrapFromId(this_el.attr('id'));
+		this_el = $('#'+el_id);
+		
 		// save to components properties from temporary assigned events
-		var events_arr = $._data(this, "events");
+		var events_arr = $._data(/*this*/ this_el[0], "events");
 		for (i in events_arr) {
 			for (j in events_arr[i]) {
 				if (events_arr[i][j].namespace == 'generated') {
@@ -539,14 +589,15 @@ function initComponent(cmp_el) {
 		initForm(cmp_el);
 	}
 	
-	$(cmp_el).unbind('dblclick').bind('dblclick', function(){
+	/*$(cmp_el).unbind('dblclick').bind('dblclick', function(e){
+		console.log(e.target, $(e.target).attr('id'));
 		var el_id = cmp_el.attr('id');
 		//$('#code_editor #label_info').text(cmp_el.attr('cmp_type') + ' - ' + el_id);
 		$('#code_editor textarea').text("");
 		openCodeEditor();
 		$('#code_components_list').val(el_id);
 		onCmpListChange();
-	});
+	});*/
 }
 
 function newComponent() {
@@ -698,8 +749,9 @@ function updateCodeComponentsList() {
 	var options_html = '<option></option>';
 	$('#root #main_center .component').each(function(){
 		var cmp_id = $(this).attr('id');
+		cmp_id = removeWrapFromId(cmp_id);
 		if (cmp_id != 'new_tmp_item'){
-			options_html+= '<option>' + $(this).attr('id') + '</option>';
+			options_html+= '<option>' + cmp_id + '</option>';
 		}
 	});
 	all_cmp_list.html(options_html);

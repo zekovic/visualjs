@@ -1,6 +1,7 @@
 
 .component[cmp_version=blue], .component[cmp_version=blue].form .titlebar {
-	background-color: #2698f5;
+	/*background-color: #2698f5;*/
+	background-color: #63b9ff;
 	/*color: #cedbec;*/
 	color: #042e64;
 }
@@ -8,7 +9,19 @@
 	background-color: #4da0e4;
 }
 .component[cmp_version=blue].form, .component[cmp_version=blue].panel {
-	background-color: #90cdff;
+	/*background-color: #90cdff;*/
+	background-color: #d0eaff;
+	/*border: 1px solid #7eaae2 !important;*/
+	border-color: #7eaae2 !important;
+	box-shadow: 1px 1px 3px 0px #7bbaf3;
+	border-width: 1px !important;
+}
+.component[cmp_version=blue].button {
+	background-color: #337ead;
+	border-color: #7eaae2 !important;
+	color: #ffffff !important;
+	box-shadow: 1px 1px 3px 0px #7bbaf3;
+	border-width: 1px !important;
 }
 
 .component[cmp_version=gold] {
@@ -18,6 +31,8 @@
 .component[cmp_version=gold].hov:hover, .component[cmp_version=gold].form .titlebar, .component[cmp_version=gold].table tr:hover {
 	background-color: #b2b490;
 }
+
+
 
 .component[cmp_version=green] {
 	background-color: #128329;
@@ -114,15 +129,17 @@
 	height: 20px;
 	/*background: #b2b490;*/
 	cursor: default;
+	font-weight: bold;
 }
 #main_center .component.form .form-close {
 	position: absolute;
 	right: 5;
 	top: 8px;
 	cursor: default;
+	border-radius: 3px;
 }
-#main_center .component.form .form-close :hover {
-	/*background-color: #161612 !important;*/
+#main_center .component.form .form-close:hover {
+	background-color: #4581d4 !important;
 }
 
 #main_center .component.form.design > .titlebar {

@@ -16,7 +16,7 @@ $(window).on('load', function (e) {
 
 function initLoadedPage() {
 	initForm($('.component.form'));
-	
+	//initAllWrapInputs();
 }
 
 function initForm(el) {
@@ -29,6 +29,31 @@ function initForm(el) {
 	$(el).draggable(arg);
 	$(el).find('.form-close').unbind('click').bind('click', function(){
 		$(this).closest('.form').hide();
+	});
+}
+
+function removeWrapFromId(el_id) {
+	if (el_id.indexOf("_wrap") == el_id.length-5) {
+		el_id = el_id.substring(0, el_id.length-5);
+	}
+	return el_id;
+}
+		
+function initAllWrapInputs() {
+	initWrapInput("#main_center_wrap [id$=_wrap]");
+}
+
+function initWrapInput(cmp_el) {
+	$(cmp_el).each(function(){
+		$(this).bind('val', function(new_val) {
+			var input_cmp = $(this).find('input');
+			console.log("INPUT FOUND:", input_cmp, input_cmp.val());
+			if (new_val === undefined) {
+				return input_cmp.val();
+			} else {
+				input_cmp.val(new_val);
+			}
+		});
 	});
 }
 
